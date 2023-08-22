@@ -64,11 +64,11 @@
     
   }  disciplina;
   
-  int menuPrincipal();
+  int menuPrincipal(int windows);
 
-  int menuAtualizar();
+  int menuAtualizar(int windows);
 
-  int menuExibicao();
+  int menuExibicao(int windows);
 
 
   void listarPorSexo(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at);
@@ -97,17 +97,17 @@
   void aniversariantesMes(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
   
   
-  int menuAlunos();
+  int menuAlunos(int windows);
 
   void exibirAlunos(pessoa alunos[], int a_cad, int ano_at, int mes_at, int dia_at);
   
   
-  int menuProfessores();
+  int menuProfessores(int windows);
   
   void exibirProfessores(pessoa professores[], int p_cad, int ano_at, int mes_at, int dia_at);
   
   
-  int menuDisciplinas();
+  int menuDisciplinas(int windows);
   
   int cadastrarDrisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
   
@@ -221,7 +221,7 @@
       while (!sair)
       {
           printf("Menu Principal\n");
-          escolha = menuPrincipal();
+          escolha = menuPrincipal(windows);
   
           limparTela(windows);
   
@@ -244,7 +244,7 @@
                   while(!sairAluno)
                   {
                       printf("Modulo de Alunos\n");
-                      escolha_aluno = menuAlunos();
+                      escolha_aluno = menuAlunos(windows);
                       aluno = 1;
   
                       switch(escolha_aluno)
@@ -348,7 +348,7 @@
                                 {
                                     limparTela(windows);
                                     printf("Menu de Atualizar\n");
-                                    escolha_att = menuAtualizar();
+                                    escolha_att = menuAtualizar(windows);
                                     switch (escolha_att)
                                         {
                                         case 0:
@@ -409,7 +409,7 @@
                             {
                                 limparTela(windows);
                                 printf("Exibicao Alunos\n");
-                                escolha_e_aluno = menuExibicao();
+                                escolha_e_aluno = menuExibicao(windows);
                                 switch (escolha_e_aluno)
                                 {
                                     case 0:
@@ -589,7 +589,7 @@
                   while (!sairProf)
                   {
                       printf("Modulo de Professores\n");
-                      escolha_prof = menuProfessores();
+                      escolha_prof = menuProfessores(windows);
   
                       switch(escolha_prof)
                       {
@@ -718,7 +718,7 @@
                                 {
                                     limparTela(windows);
                                     printf("Menu de Atualizar\n");
-                                    escolha_att = menuAtualizar();
+                                    escolha_att = menuAtualizar(windows);
                                     switch (escolha_att)
                                         {
                                         case 0:
@@ -779,7 +779,7 @@
                             {
                                 limparTela(windows);
                                 printf("Exibicao Professores\n");
-                                escolha_e_prof = menuExibicao();
+                                escolha_e_prof = menuExibicao(windows);
                                 switch (escolha_e_prof)
                                 {
                                     case 0:
@@ -928,7 +928,7 @@
                   while (!sairDisci)
                   {
                       printf("Modulo de Disciplinas\n");
-                      escolha_disci = menuDisciplinas();
+                      escolha_disci = menuDisciplinas(windows);
   
                       switch(escolha_disci)
                       {
@@ -1022,7 +1022,15 @@
   }
   
   // MENUS
-  int menuPrincipal()
+
+void errorMsg(int windows)
+{
+    limparTela(windows);
+    printf("Entrada Invalida!");
+    pressEnter();
+}
+
+  int menuPrincipal(int windows)
   {
       int escolha = -1;
       printf("======================\n\n");
@@ -1037,7 +1045,7 @@
       printf("Qual deseja acessar?: ");
       if (scanf("%d", &escolha) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
   
       limparBuffer();
@@ -1046,7 +1054,7 @@
   }
   
   
-  int menuAlunos()
+  int menuAlunos(int windows)
   {
       int escolha_aluno = -1;
       printf("======================\n\n");
@@ -1060,7 +1068,7 @@
     
       if (scanf("%d", &escolha_aluno) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
 
       limparBuffer();
@@ -1068,7 +1076,7 @@
       return escolha_aluno;
   }
 
-  int menuExibicao()
+  int menuExibicao(int windows)
   {
       int escolha_exibicao = -1;
       printf("======================\n\n");
@@ -1083,7 +1091,7 @@
 
       if (scanf("%d", &escolha_exibicao) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
 
       limparBuffer();
@@ -1092,7 +1100,7 @@
   }
 
 
-  int menuAtualizar()
+  int menuAtualizar(int windows)
   {
       int escolha_att = -1;
       printf("======================\n\n");
@@ -1107,7 +1115,7 @@
   
       if (scanf("%d", &escolha_att) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
 
       limparBuffer();
@@ -1116,7 +1124,7 @@
   }
   
   
-  int menuProfessores()
+  int menuProfessores(int windows)
   {
       int escolha_prof = -1;
       printf("======================\n\n");
@@ -1130,7 +1138,7 @@
   
       if (scanf("%d", &escolha_prof) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
 
       limparBuffer();
@@ -1139,7 +1147,7 @@
   }
   
   
-  int menuDisciplinas()
+  int menuDisciplinas(int windows)
   {
       int escolha_disci = -1;
       printf("======================\n\n");
@@ -1153,7 +1161,7 @@
   
       if (scanf("%d", &escolha_disci) != 1)
       {
-        printf("Erro");
+        errorMsg(windows);
       }
 
       limparBuffer();
