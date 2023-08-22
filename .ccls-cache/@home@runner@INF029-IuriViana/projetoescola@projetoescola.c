@@ -77,8 +77,6 @@
 
   void listarNascimento();
 
-//   int buscaPessoa();
-
 
   int cadastrar(pessoa pessoa_main[], int a_cad, pessoa pessoa_comp[], int p_cad, int windows, int ano_at, int aluno, int* continuar, int i, int escolha_att);
 
