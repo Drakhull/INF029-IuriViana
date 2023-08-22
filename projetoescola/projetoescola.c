@@ -134,7 +134,7 @@
   int main (void)
   {
     // DEFINIR SISTEMA
-    int windows = 0;
+    int windows = 1;
     pessoa alunos[n_alunos];
     pessoa professores[n_profs];
     disciplina disciplinas[n_disci];
@@ -1057,12 +1057,14 @@
       printf("4 - Excluir Alunos\n\n");
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
-  
+    
       if (scanf("%d", &escolha_aluno) != 1)
       {
         printf("Erro");
       }
-  
+
+      limparBuffer();
+
       return escolha_aluno;
   }
 
@@ -1083,6 +1085,8 @@
       {
         printf("Erro");
       }
+
+      limparBuffer();
   
       return escolha_exibicao;
   }
@@ -1105,6 +1109,8 @@
       {
         printf("Erro");
       }
+
+      limparBuffer();
   
       return escolha_att;
   }
@@ -1126,6 +1132,8 @@
       {
         printf("Erro");
       }
+
+      limparBuffer();
   
       return escolha_prof;
   }
@@ -1147,6 +1155,8 @@
       {
         printf("Erro");
       }
+
+      limparBuffer();
   
       return escolha_disci;
   }

@@ -134,7 +134,7 @@
   int main (void)
   {
     // DEFINIR SISTEMA
-    int windows = 0;
+    int windows = 1;
     pessoa alunos[n_alunos];
     pessoa professores[n_profs];
     disciplina disciplinas[n_disci];
@@ -325,10 +325,10 @@
                                 {
                                     limparTela(windows);
                                     printf("Digite a Matricula do Aluno que Deseja Atualizar: ");
-                                    if (scanf("%ld", &tentarNovamente) != 1)
-                                {
-                                  printf("Erro");
-                                }
+                                    if (scanf("%ld", &matricula) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                     retorno = procurarPessoa(aluno, matricula, alunos, dia_at, mes_at, ano_at, a_cad);
                                 }
                                 else if (!tentarNovamente)
@@ -486,7 +486,10 @@
                                 char exibir;
                                 limparBuffer();
                                 printf("Deseja exibir os alunos? S/N: ");
-                                scanf("%c", &exibir);
+                                if (scanf("%c", &exibir) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                 if (exibir == 's' || exibir == 'S')
                                 {
                                     exibirAlunos(alunos, a_cad, ano_at, mes_at, dia_at);
@@ -504,7 +507,10 @@
                             }
 
                             printf("\n\nDigite a Matricula do Aluno que Deseja Excluir: ");
-                            scanf("%ld", &matricula);
+                            if (scanf("%ld", &matricula) != 1)
+                            {
+                              printf("Erro");
+                            }
                             limparBuffer();
 
                             int retorno;
@@ -517,18 +523,27 @@
                                 limparTela(windows);
                                 printf("Aluno nao existe\n\n");
                                 printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                scanf("%d", &tentarNovamente);
+                                if (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                 while (tentarNovamente != 1 && tentarNovamente != 0)
                                 {
                                     printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                    scanf("%d", &tentarNovamente);
+                                    if (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                 }
                                 
                                 if (tentarNovamente)
                                 {
                                     limparTela(windows);
                                     printf("Digite a Matricula do Aluno que Deseja Excluir: ");
-                                    scanf("%ld", &matricula);
+                                    if (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                     retorno = procurarPessoa(aluno, matricula, alunos, dia_at, mes_at, ano_at, a_cad);
                                 }
                                 else if (!tentarNovamente)
@@ -624,7 +639,10 @@
                                 char exibir;
                                 limparBuffer();
                                 printf("Deseja exibir os professores? S/N: ");
-                                scanf("%c", &exibir);
+                                if (scanf("%c", &exibir) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                 if (exibir == 's' || exibir == 'S')
                                 {
                                     aluno = 0;
@@ -644,7 +662,10 @@
 
                             exibirProfessores(professores, p_cad, ano_at, mes_at, dia_at);
                             printf("\n\nDigite a Matricula do Professor que Deseja Atualizar: ");
-                            scanf("%ld", &matricula);
+                            if (scanf("%ld", &matricula) != 1)
+                            {
+                              printf("Erro");
+                            }
                             limparBuffer();
 
                             int retorno;
@@ -657,18 +678,27 @@
                                 limparTela(windows);
                                 printf("Professor nao existe\n\n");
                                 printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                scanf("%d", &tentarNovamente);
+                                if (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                 while (tentarNovamente != 1 && tentarNovamente != 0)
                                 {
                                     printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                    scanf("%d", &tentarNovamente);
+                                    if (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                 }
                                 
                                 if (tentarNovamente)
                                 {
                                     limparTela(windows);
                                     printf("Digite a Matricula do Professor que Deseja Atualizar: ");
-                                    scanf("%ld", &matricula);
+                                    if (scanf("%ld", &matricula) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                     retorno = procurarPessoa(aluno, matricula, professores, dia_at, mes_at, ano_at, p_cad);
                                 }
                                 else if (!tentarNovamente)
@@ -820,7 +850,10 @@
                             long int matricula = 0;
 
                             printf("Digite a Matricula do Professor que Deseja Excluir: ");
-                            scanf("%ld", &matricula);
+                            if (scanf("%ld", &matricula) != 1)
+                            {
+                              printf("Erro");
+                            }
                             limparBuffer();
 
                             int retorno;
@@ -833,18 +866,27 @@
                                 limparTela(windows);
                                 printf("Professor nao existe\n\n");
                                 printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                scanf("%d", &tentarNovamente);
+                                if (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                 while (tentarNovamente != 1 && tentarNovamente != 0)
                                 {
                                     printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                    scanf("%d", &tentarNovamente);
+                                    if (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                 }
                                 
                                 if (tentarNovamente)
                                 {
                                     limparTela(windows);
                                     printf("Digite a Matricula do Professor que Deseja Excluir: ");
-                                    scanf("%ld", &matricula);
+                                    if (scanf("%ld", &matricula) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                     retorno = procurarPessoa(aluno, matricula, professores, dia_at, mes_at, ano_at, p_cad);
                                 }
                                 else if (!tentarNovamente)
@@ -930,7 +972,10 @@
                             int retorno;
                             char codigo[9];
                             printf("Digite o Codigo da Discpilina: ");
-                            scanf("%s", codigo);
+                            if (scanf("%s", codigo) != 1)
+                            {
+                              printf("Erro");
+                            }
                             retorno = procurarDisciplina(disciplinas, codigo, d_cad);
                             printf ("\nRetorno %d", retorno);
                             pressEnter();
@@ -990,7 +1035,10 @@
       printf("======================\n\n");
   
       printf("Qual deseja acessar?: ");
-      scanf("%d", &escolha);
+      if (scanf("%d", &escolha) != 1)
+      {
+        printf("Erro");
+      }
   
       limparBuffer();
   
@@ -1009,9 +1057,14 @@
       printf("4 - Excluir Alunos\n\n");
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
-  
-      scanf("%d", &escolha_aluno);
-  
+    
+      if (scanf("%d", &escolha_aluno) != 1)
+      {
+        printf("Erro");
+      }
+
+      limparBuffer();
+
       return escolha_aluno;
   }
 
@@ -1027,8 +1080,13 @@
       printf("5 - Ordenar por Nascimento\n\n");
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
-  
-      scanf("%d", &escolha_exibicao);
+
+      if (scanf("%d", &escolha_exibicao) != 1)
+      {
+        printf("Erro");
+      }
+
+      limparBuffer();
   
       return escolha_exibicao;
   }
@@ -1047,7 +1105,12 @@
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
   
-      scanf("%d", &escolha_att);
+      if (scanf("%d", &escolha_att) != 1)
+      {
+        printf("Erro");
+      }
+
+      limparBuffer();
   
       return escolha_att;
   }
@@ -1065,7 +1128,12 @@
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
   
-      scanf("%d", &escolha_prof);
+      if (scanf("%d", &escolha_prof) != 1)
+      {
+        printf("Erro");
+      }
+
+      limparBuffer();
   
       return escolha_prof;
   }
@@ -1083,7 +1151,12 @@
       printf("======================\n\n");
       printf("Qual deseja acessar?: ");
   
-      scanf("%d", &escolha_disci);
+      if (scanf("%d", &escolha_disci) != 1)
+      {
+        printf("Erro");
+      }
+
+      limparBuffer();
   
       return escolha_disci;
   }
@@ -1094,8 +1167,10 @@
   {
       if (windows)
       {
-          system("cls");
-      }else system("clear");
+          if (system("cls") == 1)
+              printf("Comando limpar tela nao pode ser executado");
+      }else if (system("clear") == 1)
+                printf("Comando limpar tela nao pode ser executado");
   }
   
   
@@ -1134,13 +1209,19 @@
     char sexo;
     int verificado = 0;
     printf("Digite 'F' para Feminino e 'M' para Masculino: "); limparBuffer();
-    scanf("%c", &sexo);
+    if (scanf("%c", &sexo) != 1)
+    {
+      printf("Erro");
+    }
     while (!verificado)
     {
         if (sexo != 'f' && sexo != 'F' && sexo != 'm' && sexo != 'M')
         {
             printf("\nOpcao invalida. Tente Novamente (F/M): "); limparBuffer();
-            scanf("%c", &sexo);
+            if (scanf("%c", &sexo) != 1)
+            {
+              printf("Erro");
+            }
         }
         else 
         {
@@ -1194,14 +1275,20 @@ void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, i
     printf("======================\n\n");
 
     printf("Como deseja ordenar?: "); limparBuffer();
-    scanf("%d", &ordem);
+    if (scanf("%d", &ordem) != 1)
+    {
+      printf("Erro");
+    }
 
     while (!verificado)
     {
         if (ordem > 2 || ordem < 0)
         {
             printf("\nOpcao invalida. Tente Novamente: "); limparBuffer();
-            scanf("%d", &ordem);
+            if (scanf("%d", &ordem) != 1)
+            {
+              printf("Erro");
+            }
         }
         else 
         {
@@ -1506,11 +1593,17 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         {
             char SeN;
             printf("Deseja Continuar? S/N: ");
-            scanf("%c", &SeN);
+            if (scanf("%c", &SeN) != 1)
+            {
+              printf("Erro");
+            }
             while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
             {
                 printf("\n\nOpcao invalida. Digite 'S' para SIM e 'N' para NAO: ");
-                scanf("%c", &SeN);
+                if (scanf("%c", &SeN) != 1)
+                {
+                  printf("Erro");
+                }
             }
             return SeN;
         }
@@ -1622,7 +1715,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     if (escolha_att == 1 || escolha_att == 0)
     {
         printf("\nInsira seu nome: "); limparBuffer();
-        fgets(pessoa_main[i].nome, max, stdin);
+        if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
+        {
+          printf("Algo deu errado ao digitar.");
+        }
         fixQuebraLinhaFgets(pessoa_main[i].nome);
         
         for (int j = 0; pessoa_main[i].nome[j] != '\0'; j++)
@@ -1630,7 +1726,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             while (!((pessoa_main[i].nome[j] >= 'A' && pessoa_main[i].nome[j] <= 'Z') || (pessoa_main[i].nome[j] >= 'a' && pessoa_main[i].nome[j] <= 'z') || (pessoa_main[i].nome[j] == ' ')))
             {
                 printf("\nO nome nao pode conter caracteres especiais ou acento!\n\nInsira novamente:  ");
-                fgets(pessoa_main[i].nome, max, stdin);
+                if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
+                {
+                  printf("Algo deu errado ao digitar.");
+                }
                 fixQuebraLinhaFgets(pessoa_main[i].nome);
             }
             if (pessoa_main[i].nome[j] == ' ')
@@ -1646,7 +1745,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (pessoa_main[i].nome[0] <'A' || pessoa_main[i].nome[0] > 'Z')
                 {
                     printf("\nSeu nome esta em minusculo!\n\nInsira novamente:  ");
-                    fgets(pessoa_main[i].nome, max, stdin);
+                    if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
+                    {
+                      printf("Algo deu errado ao digitar.");
+                    }
                     fixQuebraLinhaFgets(pessoa_main[i].nome);
                 }
                 for (int j = 0; pessoa_main[i].nome[j] != '\0'; j++)
@@ -1654,7 +1756,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                     if (!((pessoa_main[i].nome[j] >= 'A' && pessoa_main[i].nome[j] <= 'Z') || (pessoa_main[i].nome[j] >= 'a' && pessoa_main[i].nome[j] <= 'z') || (pessoa_main[i].nome[j] == ' ')))
                     {
                         printf("\nO nome nao pode conter caracteres especiais ou acento!\n\nInsira novamente:  ");
-                        fgets(pessoa_main[i].nome, max, stdin);
+                        if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
+                        {
+                          printf("Algo deu errado ao digitar.");
+                        }
                         fixQuebraLinhaFgets(pessoa_main[i].nome);
                     }
                     if (pessoa_main[i].nome[j] == ' ')
@@ -1669,7 +1774,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 {
                     printf("\nVoce deve inserir seu nome completo!\n\nInsira novamente:  ");
                     
-                    fgets(pessoa_main[i].nome, max, stdin);
+                    if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
+                    {
+                      printf("Algo deu errado ao digitar.");
+                    }
                     fixQuebraLinhaFgets(pessoa_main[i].nome);
                     limparBuffer();
                 }
@@ -1690,11 +1798,19 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirPessoa(aluno, a_cad);
         
         printf("\nQual o seu sexo? F (Feminino), M (Masculino): ");
-        scanf("%c", &pessoa_main[i].sexo); limparBuffer();
+        if (scanf("%c", &pessoa_main[i].sexo) != 1)
+        {
+          printf("Erro");
+        }
+        limparBuffer();
         while (pessoa_main[i].sexo != 'm' && pessoa_main[i].sexo != 'M' && pessoa_main[i].sexo != 'f' && pessoa_main[i].sexo != 'F')
         {
             printf("\nSomente as opcoes F (Feminino) e M (Masculino) sao aceitas!\n\nInsira novamente:  ");
-            scanf("%c", &pessoa_main[i].sexo); limparBuffer();
+            if (scanf("%c", &pessoa_main[i].sexo) != 1)
+            {
+              printf("Erro");
+            }
+            limparBuffer();
         }
 
         if (pessoa_main[i].sexo == 'm' || pessoa_main[i].sexo == 'M')
@@ -1717,7 +1833,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirPessoa(aluno, a_cad);
 
         printf("\nInsira sua data de nascimento DD MM AAAA espacando devidamente: ");
-        scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano); limparBuffer();
+        if (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
+        {
+          printf("Erro");
+        }
+        limparBuffer();
 
         // FAZER UMA FUNÇÂO DE VERIFICAÇÂO DE DATA
 
@@ -1754,7 +1874,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             {
                 validacao = 0;
                 printf("\n\nData invalida!\n\nInsira Novamente no modo DD MM AAAA: ");
-                scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano); limparBuffer();
+                if (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
+                {
+                  printf("Erro");
+                }
+              limparBuffer();
             } 
             if (validacao == 2)
                 {
@@ -1774,7 +1898,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirPessoa(aluno, a_cad);
     // ALERTA QUANDO ALGUÉM DIGITAR UM VALOR COMO 123 será considerado válido
         printf("\nInsira sua matricula (9 digitos): ");
-        scanf(" %ld", &pessoa_main[i].matricula); limparBuffer();
+        if (scanf(" %ld", &pessoa_main[i].matricula) != 1)
+        {
+          printf("Erro");
+        }
+        limparBuffer();
         for (int j = 0, t1 = 0, t2 = 0, t3 = 0; t1 == 0 || t2 == 0 || t3 == 0; j++)
         {
             t1 = 0; t2 = 0; t3 = 0;
@@ -1785,7 +1913,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (pessoa_main[i].matricula == pessoa_main[j].matricula)
                 {
                     printf("\n\nMatricula ja existente!\n\nInsira novamente: ");
-                    scanf(" %ld", &pessoa_main[i].matricula); limparBuffer();
+                    if (scanf(" %ld", &pessoa_main[i].matricula) != 1)
+                    {
+                      printf("Erro");
+                    }
+                    limparBuffer();
                 }else t1++;
                 
             }
@@ -1795,14 +1927,22 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (pessoa_main[i].matricula == pessoa_comp[j].matricula)
                 {
                     printf("\n\nMatricula ja existente!\n\nInsira novamente: ");
-                    scanf(" %ld", &pessoa_main[i].matricula); limparBuffer();
+                    if (scanf(" %ld", &pessoa_main[i].matricula) != 1)
+                    {
+                      printf("Erro");
+                    }
+                    limparBuffer();
                 }else t2++;
             }
 
             if (pessoa_main[i].matricula <= 0 || pessoa_main[i].matricula > 999999999)
             {
                 printf("\n\nMatricula invalida!\n\nInsira novamente: ");
-                scanf(" %ld", &pessoa_main[i].matricula); limparBuffer();
+                if (scanf(" %ld", &pessoa_main[i].matricula) != 1)
+                {
+                  printf("Erro");
+                }
+                limparBuffer();
             }else t3++;
         }
 
@@ -1818,14 +1958,22 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirPessoa(aluno, a_cad);
 
         printf("\nInsira seu CPF sem formatacao (11 Digitos): ");
-        scanf(" %s", pessoa_main[i].cpf); limparBuffer();
+        if (scanf(" %s", pessoa_main[i].cpf) != 1)
+        {
+          printf("Erro");
+        }
+        limparBuffer();
         
         for (int j = 0; pessoa_main[i].cpf[j] != '\0'; j++)
         {
             if (strlen(pessoa_main[i].cpf) != 11)
             {
                 printf("\n\nCPF invalido!\n\nInsira novamente: ");
-                scanf(" %s", pessoa_main[i].cpf); limparBuffer();
+                if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                {
+                  printf("Erro");
+                }
+                limparBuffer();
             }
 
             for(int j = 0; j < a_cad; j++)
@@ -1834,7 +1982,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (strcmp(pessoa_main[i].cpf, pessoa_main[j].cpf) == 0)
                 {
                     printf("\n\nCPF ja existente!\n\nInsira novamente: ");
-                    scanf(" %s", pessoa_main[i].cpf); limparBuffer();
+                    if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                    {
+                      printf("Erro");
+                    }
+                    limparBuffer();
                 }
             }
             for(int j = 0; j < p_cad; j++)
@@ -1843,7 +1995,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (strcmp(pessoa_main[i].cpf, pessoa_comp[j].cpf) == 0)
                 {
                     printf("\n\nCPF ja existente!\n\nInsira novamente: ");
-                    scanf(" %s", pessoa_main[i].cpf); limparBuffer();
+                    if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                    {
+                      printf("Erro");
+                    }
+                    limparBuffer();
                 }
             }
         }
@@ -1880,12 +2036,18 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         a_cad++; // passa para a próxima posição do vetor dizendo que a anterior ja esta ocupada por um cadastro
         char SeN;
         printf("Deseja realizar um novo cadastro? (S/N): ");
-        scanf("%c", &SeN);
+        if (scanf("%c", &SeN) != 1)
+        {
+          printf("Erro");
+        }
         // SeN = getch();
         while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
         {
             printf("\n\nOpcao invalida. Digite 'S' para SIM e 'N' para NAO: ");
-            scanf("%c", &SeN);
+            if (scanf("%c", &SeN) != 1)
+            {
+              printf("Erro");
+            }
             // SeN = getch();
         }
         if (SeN == 'n' || SeN == 'N')
@@ -1998,8 +2160,12 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
       {
           printf("--------Disciplina %d--------", d_cad+1);
   
-          printf("\nInsira o nome da disciplina: "); limparBuffer();
-          fgets(disciplinas[i].nome, max, stdin); 
+          printf("\nInsira o nome da disciplina: "); 
+          limparBuffer();
+          if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+          {
+            printf("Algo deu errado ao digitar.");
+          }
           fixQuebraLinhaFgets(disciplinas[i].nome); 
   
           for (int j = 0; j < n_disci; j++)
@@ -2008,7 +2174,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
               if (strcmp(disciplinas[i].nome, disciplinas[j].nome) == 0)
               {
                   printf("\n\nNome ja existente!\n\nInsira novamente: ");
-                  fgets(disciplinas[i].nome, max, stdin); limparBuffer();
+                  if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                  {
+                    printf("Algo deu errado ao digitar.");
+                  }
+                  limparBuffer();
                   fixQuebraLinhaFgets(disciplinas[i].nome);
               }
               while (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
@@ -2016,7 +2186,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                   if (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
                   {
                       printf("\nA primeira letra esta em minusculo!\n\nInsira novamente:  ");
-                      fgets(disciplinas[i].nome, max, stdin); limparBuffer();
+                      if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                      {
+                        printf("Algo deu errado ao digitar.");
+                      }
+                      limparBuffer();
                       fixQuebraLinhaFgets(disciplinas[i].nome);
                   }
                   for (int j = 0; disciplinas[i].nome[j] != '\0'; j++)
@@ -2024,7 +2198,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                       if (!((disciplinas[i].nome[j] >= 'A' && disciplinas[i].nome[j] <= 'Z') || (disciplinas[i].nome[j] >= 'a' && disciplinas[i].nome[j] <= 'z') || (disciplinas[i].nome[j] == ' ')))
                       {
                           printf("\nO nome nao pode conter caracteres especiais ou acento!\n\nInsira novamente:  ");
-                          fgets(disciplinas[i].nome, max, stdin); limparBuffer();
+                          if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                          {
+                            printf("Algo deu errado ao digitar.");
+                          }
+                          limparBuffer();
                           fixQuebraLinhaFgets(disciplinas[i].nome);
                       }
                   }
@@ -2034,8 +2212,12 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           limparTela(windows);
           printf("--------Disciplina %d--------", d_cad+1);
   
-          printf("\nInsira o codigo da disciplina 8 digitos: "); limparBuffer();
-          fgets(disciplinas[i].codigo, 9, stdin);
+          printf("\nInsira o codigo da disciplina 8 digitos: "); 
+          limparBuffer();
+          if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
+          {
+            printf("Algo deu errado ao digitar.");
+          }
           fixQuebraLinhaFgets(disciplinas[i].codigo);
   
           for (int j = 0, verify = 0; j < d_cad; j++)
@@ -2046,7 +2228,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                   if (strlen(disciplinas[i].codigo) == 8)
                   {
                       printf("\n\nO codigo precisa ter 8 digitos.\n\nInsira novamente: ");
-                      fgets(disciplinas[i].codigo, 9, stdin); limparBuffer();
+                      if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
+                      {
+                        printf("Algo deu errado ao digitar.");
+                      }
+                      limparBuffer();
                       fixQuebraLinhaFgets(disciplinas[i].codigo);
                   }else verify++;
   
@@ -2055,8 +2241,12 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                       if (i == k)k++;
                       if (strcmp(disciplinas[i].codigo, disciplinas[k].codigo) == 0)
                       {
-                          printf("\n\nCodigo ja existente!\n\nInsira novamente: "); limparBuffer();
-                          fgets(disciplinas[i].codigo, 9, stdin); 
+                          printf("\n\nCodigo ja existente!\n\nInsira novamente: "); 
+                          limparBuffer();
+                          if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
+                          {
+                            printf("Algo deu errado ao digitar.");
+                          }
                           fixQuebraLinhaFgets(disciplinas[i].codigo);
                       }else verify++;
                   }
@@ -2067,13 +2257,19 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           printf("--------Disciplina %d--------", d_cad+1);
   
           printf("\nInsira a matricula do professor da disciplina de %s: ", disciplinas[i].nome); 
-          scanf(" %ld", &disciplinas[i].matriculaProfessor);
+          if (scanf(" %ld", &disciplinas[i].matriculaProfessor) != 1)
+          {
+            printf("Erro");
+          }
           for (int k = 0, continuare = 1; k < p_cad && continuare; k++)
           {
               while (disciplinas[i].matriculaProfessor != professores[k].matricula)
               {
                   printf("\n\nMatricula Invalida. Verifique se digitou corretamente.\n\nInsira novamente: ");
-                  scanf(" %ld", &disciplinas[i].matriculaProfessor);
+                  if (scanf(" %ld", &disciplinas[i].matriculaProfessor) != 1)
+                  {
+                    printf("Erro");
+                  }
               }
   
               if (disciplinas[i].matriculaProfessor == professores[k].matricula)
@@ -2085,13 +2281,21 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           limparTela(windows);
           printf("--------Disciplina %d--------", d_cad+1);
   
-          printf("\nInsira o semestre da disciplina. Ex: 1, 2, 3... : "); limparBuffer();
-          scanf("%d", &disciplinas[i].semestre); 
+          printf("\nInsira o semestre da disciplina. Ex: 1, 2, 3... : "); 
+          limparBuffer();
+          if (scanf("%d", &disciplinas[i].semestre) != 1)
+          {
+            printf("Erro");
+          }
   
           while (disciplinas[i].semestre < 1 || disciplinas[i].semestre > 14)
           {
-              printf("\n\nOpcao invalida!\nInsira novamente: "); limparBuffer();
-              scanf("%d", &disciplinas[i].semestre); 
+              printf("\n\nOpcao invalida!\nInsira novamente: "); 
+              limparBuffer();
+              if (scanf("%d", &disciplinas[i].semestre) != 1)
+              {
+                printf("Erro");
+              } 
           }
   
           int contagem_reg = 3;
@@ -2107,12 +2311,18 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           limparBuffer();
           char SeN;
           printf("Deseja cadastrar mais uma disciplina? 's' para Sim, 'n' para Nao: ");
-          scanf("%c", &SeN);
+          if (scanf("%c", &SeN) != 1)
+          {
+            printf("Erro");
+          }
           // SeN = getch();
           while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
           {
               printf("\n\nOpcao invalida. Digite 's' para SIM e 'n' para NAO: ");
-              scanf("%c", &SeN);
+              if (scanf("%c", &SeN) != 1)
+              {
+                printf("Erro");
+              }
               // SeN = getch();
           }
           if (SeN == 'n' || SeN == 'N')
