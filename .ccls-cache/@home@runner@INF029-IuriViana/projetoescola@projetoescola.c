@@ -290,7 +290,11 @@
                             long int matricula = 0;
 
                             printf("Digite a Matricula do Aluno que Deseja Atualizar: ");
-                            scanf("%ld", &matricula);
+                            if (scanf("%ld", &matricula) != 1)
+                            {
+                              printf("Erro");
+                            }
+                            // scanf("%ld", &matricula);
                             limparBuffer();
 
                             int retorno;
@@ -303,18 +307,28 @@
                                 limparTela(windows);
                                 printf("Aluno nao existe\n\n");
                                 printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                scanf("%d", &tentarNovamente);
+                                if (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                  printf("Erro");
+                                }
+                              
                                 while (tentarNovamente != 1 && tentarNovamente != 0)
                                 {
                                     printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
-                                    scanf("%d", &tentarNovamente);
+                                    if (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                      printf("Erro");
+                                    }
                                 }
                                 
                                 if (tentarNovamente)
                                 {
                                     limparTela(windows);
                                     printf("Digite a Matricula do Aluno que Deseja Atualizar: ");
-                                    scanf("%ld", &matricula);
+                                    if (scanf("%ld", &tentarNovamente) != 1)
+                                {
+                                  printf("Erro");
+                                }
                                     retorno = procurarPessoa(aluno, matricula, alunos, dia_at, mes_at, ano_at, a_cad);
                                 }
                                 else if (!tentarNovamente)
