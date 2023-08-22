@@ -134,7 +134,7 @@
   int main (void)
   {
     // DEFINIR SISTEMA
-    int windows = 1;
+    int windows = 0;
     pessoa alunos[n_alunos];
     pessoa professores[n_profs];
     disciplina disciplinas[n_disci];
