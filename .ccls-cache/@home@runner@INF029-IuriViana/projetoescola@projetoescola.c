@@ -8,13 +8,12 @@
   
   //  Problemas notados e funcionalidades a implementar:
   //-1 - Programa quebra ao inserir letra em alguns menus Switch Case
-  // 0 - Usar doppelganger no cadastro pessoa;
+  // 0 - Usar doppelganger no cadastro pessoa (Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo);
   // 1 - Verificação de professor existente para disciplina parou de funcionar (pedir matricula ao inves de nome)
   // 2 - Melhorar a legibilidade do código/Modularizar mais
   // 3 - Excesso de laços desnecessários?
-  // 4 - Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo
-  // 5 - Opção de voltar é atualizar, voltar tudo é excluir
-  // 6 - Se ater ao projeto principal e se preocupar com essas funcionalidades depois
+  // 4 - Opção de voltar é atualizar, voltar tudo é excluir
+  // 5 - Se ater ao projeto principal e se preocupar com essas funcionalidades depois
 
   // !!falta funcionalidades de atualizar e excluir!!
   // Lembrete: implementar opção de voltar após entrar nas opções de inserir
