@@ -8,12 +8,13 @@
   
   //  Problemas notados e funcionalidades a implementar:
   //-1 - Programa quebra ao inserir letra em alguns menus Switch Case
-  // 0 - Usar doppelganger no cadastro pessoa (Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo);
+  // 0 - Usar doppelganger no cadastro pessoa;
   // 1 - Verificação de professor existente para disciplina parou de funcionar (pedir matricula ao inves de nome)
   // 2 - Melhorar a legibilidade do código/Modularizar mais
   // 3 - Excesso de laços desnecessários?
-  // 4 - Opção de voltar é atualizar, voltar tudo é excluir
-  // 5 - Se ater ao projeto principal e se preocupar com essas funcionalidades depois
+  // 4 - Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo
+  // 5 - Opção de voltar é atualizar, voltar tudo é excluir
+  // 6 - Se ater ao projeto principal e se preocupar com essas funcionalidades depois
 
   // !!falta funcionalidades de atualizar e excluir!!
   // Lembrete: implementar opção de voltar após entrar nas opções de inserir
@@ -76,6 +77,8 @@
 
   void listarNascimento();
 
+//   int buscaPessoa();
+
 
   int cadastrar(pessoa pessoa_main[], int a_cad, pessoa pessoa_comp[], int p_cad, int windows, int ano_at, int aluno, int* continuar, int i, int escolha_att);
 
@@ -89,7 +92,9 @@
 
   int calcularIdade(int ano_pessoa, int mes_pessoa, int dia_pessoa, int dia_at, int mes_at, int ano_at);
 
-  void aniversariante(pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
+  void aniversarianteDia(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
+
+  void aniversariantesMes(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
   
   
   int menuAlunos();
@@ -121,7 +126,7 @@
   
   void delay(long int secs);
   
-  void pressKey();
+  void pressEnter();
 
   void fixQuebraLinhaFgets(char alvo[]);
   
@@ -172,8 +177,8 @@
             strcpy(alunos[1].cpf_formatado, "xxx.xxx.xxx-xx");
             alunos[1].matricula = 363546789;
             strcpy(alunos[1].nome, "Pedro Pascal");
-            alunos[1].nascimento_dia = 7;
-            alunos[1].nascimento_mes = 6;
+            alunos[1].nascimento_dia = 22;
+            alunos[1].nascimento_mes = 8;
             alunos[1].nascimento_ano = 2002;
             alunos[1].sexo = 'M';
   
@@ -183,8 +188,8 @@
             strcpy(professores[0].cpf_formatado, "xxx.xxx.xxx-xx");
             professores[0].matricula = 373546789;
             strcpy(professores[0].nome, "Professor Prof");
-            professores[0].nascimento_dia = 7;
-            professores[0].nascimento_mes = 10;
+            professores[0].nascimento_dia = 22;
+            professores[0].nascimento_mes = 8;
             professores[0].nascimento_ano = 1985;
             professores[0].sexo = 'M';
   
@@ -269,6 +274,7 @@
                                 int contagem_reg = 3;
                                 while (contagem_reg > 0) 
                                 {
+                                    limparTela(windows);
                                     printf("Limite de cadastros atingido! Voltando em %d...", contagem_reg);
                                     delay(1);
                                     limparTela(windows);
@@ -438,7 +444,9 @@
                                     case 5:
                                     {
                                         limparTela(windows);
+
                                         listarNascimento(aluno, alunos, a_cad, dia_at, mes_at, ano_at);
+
                                         limparTela(windows);
                                     }
                                         break;
@@ -582,6 +590,7 @@
                                 int contagem_reg = 3;
                                 while (contagem_reg > 0) 
                                 {
+                                    limparTela(windows);
                                     printf("Limite de cadastros atingido! Voltando em %d...", contagem_reg);
                                     delay(1);
                                     limparTela(windows);
@@ -739,7 +748,9 @@
                                     case 1:
                                     {
                                         limparTela(windows);
+
                                         exibirProfessores(professores, p_cad, ano_at, mes_at, dia_at);
+
                                         limparTela(windows);
                                     }
                                         break;
@@ -753,7 +764,9 @@
                                     case 3:
                                     {
                                         limparTela(windows);
+
                                         listarPorSexo(aluno, professores, p_cad, dia_at, mes_at, ano_at);
+
                                         limparTela(windows);
                                     }  
                                         break;
@@ -771,7 +784,9 @@
                                     case 5:
                                     {
                                         limparTela(windows);
+
                                         listarNascimento(aluno, professores, p_cad, dia_at, mes_at, ano_at);
+
                                         limparTela(windows);
                                     }
                                         break;
@@ -780,7 +795,7 @@
                                         break;
                                 }
                             }
-                              limparTela(windows);
+                            limparTela(windows);
                           }
                           break;
                           
@@ -871,7 +886,9 @@
                           case 1:
                           {
                               limparTela(windows);
+
                               d_cad = cadastrarDrisciplina(disciplinas, d_cad, professores, p_cad, windows);
+
                               limparTela(windows);
                           }
                           break;
@@ -886,7 +903,9 @@
                           case 3:
                           {
                               limparTela(windows);
+
                               exibirDisciplinas(disciplinas, d_cad, professores, p_cad, windows);
+
                               limparTela(windows);
                           }
                           break;
@@ -900,7 +919,7 @@
                             scanf("%s", codigo);
                             retorno = procurarDisciplina(disciplinas, codigo, d_cad);
                             printf ("\nRetorno %d", retorno);
-                            pressKey();
+                            pressEnter();
                             limparTela(windows);
                           }
                           break;
@@ -919,14 +938,20 @@
               case 4:
               {
                 limparTela(windows);
-                aniversariante(alunos, professores, a_cad, p_cad, dia_at, mes_at, ano_at);
+
+                aniversarianteDia(windows, alunos, professores, a_cad, p_cad, dia_at, mes_at, ano_at);
+
                 limparTela(windows);
               }
               break;
     
               case 5:
               {
-                  
+                limparTela(windows);
+
+                aniversariantesMes(windows, alunos, professores, a_cad, p_cad, dia_at, mes_at, ano_at);
+
+                limparTela(windows);
               }
               break;
       
@@ -946,7 +971,8 @@
       printf("1 - Modulo de Alunos\n\n");
       printf("2 - Modulo de Professores\n\n");
       printf("3 - Modulo de Disciplinas\n\n");
-      printf("4 - Aniversariante do dia\n\n");
+      printf("4 - Aniversariante do Dia\n\n");
+      printf("5 - Aniversariantes do Mes\n\n");
       printf("======================\n\n");
   
       printf("Qual deseja acessar?: ");
@@ -1073,9 +1099,9 @@
   }
   
   
-  void pressKey()
+  void pressEnter()
   {
-      printf("\nPressione qualquer tecla para continuar.");
+      printf("\nPressione a tecla enter para continuar.");
       limparBuffer();
   }
 
@@ -1121,7 +1147,7 @@
             }
             if (i == (cad-1))
             {
-                pressKey();
+                pressEnter();
             }
         }
         else if (sexo == 'm' || sexo == 'M')
@@ -1133,7 +1159,7 @@
             }
             if (i == (cad-1))
             {
-                pressKey();
+                pressEnter();
             }
         }
     }
@@ -1237,42 +1263,26 @@ void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, i
     }
 }
 
-void aniversariante(pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at)
+void aniversarianteDia(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at)
 {
     int idade = 0;
-    for (int i = 0; i < a_cad; i++)
-    {
-        if (aniversarianteA[i].nascimento_mes == mes_at && aniversarianteA[i].nascimento_dia == dia_at)
-        {
-            idade = calcularIdade(aniversarianteA[i].nascimento_ano, aniversarianteA[i].nascimento_mes, aniversarianteA[i].nascimento_dia, dia_at, mes_at, ano_at);
+    int aniversarios = 0;
 
-            if (aniversarianteA[i].sexo == 'm' || aniversarianteA[i].sexo == 'M')
-            {
-                printf("O Aluno %s", aniversarianteA[i].nome);
-            }
-            else if (aniversarianteA[i].sexo == 'f' || aniversarianteA[i].sexo == 'F')
-            {
-                printf("A Aluna %s", aniversarianteA[i].nome);
-            }
-            
-            // puts (aniversarianteA[i].nome); 
-            if (aniversarianteA[i].sexo == 'f' || aniversarianteA[i].sexo == 'F')
-            {
-                printf(" e a aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n", idade);
-                pressKey();
-            }
-            else if (aniversarianteA[i].sexo == 'm' || aniversarianteA[i].sexo == 'M')
-            {
-                printf(" e o aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n", idade);
-                pressKey();
-            }
+    void adicionarLinha(int aniversarios)
+    {
+        if (aniversarios > 0)
+        {
+            printf("========================================================================\n\n");
         }
     }
 
+    printf("========================================================================\n\n");
     for (int i = 0; i < p_cad; i++)
     {
         if (aniversarianteP[i].nascimento_mes == mes_at && aniversarianteP[i].nascimento_dia == dia_at)
         {
+            adicionarLinha(aniversarios);
+            aniversarios++;
             idade = calcularIdade(aniversarianteP[i].nascimento_ano, aniversarianteP[i].nascimento_mes, aniversarianteP[i].nascimento_dia, dia_at, mes_at, ano_at);
 
             if (aniversarianteP[i].sexo == 'm' || aniversarianteP[i].sexo == 'M' )
@@ -1284,20 +1294,138 @@ void aniversariante(pessoa aniversarianteA[], pessoa aniversarianteP[], int a_ca
                 printf("A Professora %s", aniversarianteP[i].nome);
             }
             
-            // puts (aniversarianteP[i].nome); 
             if (aniversarianteP[i].sexo == 'f' || aniversarianteP[i].sexo == 'F')
             {
-                printf(" e a aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n", idade);
-                pressKey();
+                printf(" e a aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n\n", idade);
             }
             else if (aniversarianteP[i].sexo == 'm' || aniversarianteP[i].sexo == 'M')
             {
-                printf(" e o aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n", idade);
-                pressKey();
+                printf(" e o aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n\n", idade);
             }
         }
     }
+
+    for (int i = 0; i < a_cad; i++)
+    {
+        if (aniversarianteA[i].nascimento_mes == mes_at && aniversarianteA[i].nascimento_dia == dia_at)
+        {
+            adicionarLinha(aniversarios);
+            aniversarios++;
+            idade = calcularIdade(aniversarianteA[i].nascimento_ano, aniversarianteA[i].nascimento_mes, aniversarianteA[i].nascimento_dia, dia_at, mes_at, ano_at);
+
+            if (aniversarianteA[i].sexo == 'm' || aniversarianteA[i].sexo == 'M')
+            {
+                printf("O Aluno %s", aniversarianteA[i].nome);
+            }
+            else if (aniversarianteA[i].sexo == 'f' || aniversarianteA[i].sexo == 'F')
+            {
+                printf("A Aluna %s", aniversarianteA[i].nome);
+            }
+             
+            if (aniversarianteA[i].sexo == 'f' || aniversarianteA[i].sexo == 'F')
+            {
+                printf(" e a aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n\n", idade);
+            }
+            else if (aniversarianteA[i].sexo == 'm' || aniversarianteA[i].sexo == 'M')
+            {
+                printf(" e o aniversariante do dia!!!\n\nParabens pelos %d anos de vida e por mais 1 ano de proximidade da morte!\n\n", idade);
+            }
+        }
+    }
+    printf("========================================================================\n\n");
+
+    if (!aniversarios)
+    {
+        limparTela(windows);
+        printf("Sem aniversariantes do dia.\n");
+    }
+
+    pressEnter();
 }
+
+
+void aniversariantesMes(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at)
+{
+    int idade = 0;
+    int aniversarios = 0;
+
+    void fixIdade(int idade, int nascimento_dia, int dia_at)
+    {
+        if (nascimento_dia > dia_at)
+        {
+            idade++;
+            printf("%d anos.\n\n", idade);
+        }
+        else if (nascimento_dia <= dia_at)
+        {
+            printf("%d anos.\n\n", idade);
+        }
+    }
+
+    void adicionarLinha(int aniversarios)
+    {
+        if (aniversarios > 0)
+        {
+            printf("------------------------------------------------------------------------\n\n");
+        }
+    }
+
+    printf("Os aniversariantes do mes sao: \n");
+    printf("==============================\n\n");
+
+    for (int i = 0; i < p_cad; i++)
+    {
+        if (aniversarianteP[i].nascimento_mes == mes_at)
+        {
+            adicionarLinha(aniversarios);
+            aniversarios++;
+            idade = calcularIdade(aniversarianteP[i].nascimento_ano, aniversarianteP[i].nascimento_mes, aniversarianteP[i].nascimento_dia, dia_at, mes_at, ano_at);
+
+            if (aniversarianteP[i].sexo == 'm' || aniversarianteP[i].sexo == 'M' )
+            {
+                printf("O Professor %s completando ", aniversarianteP[i].nome);
+                fixIdade(idade, aniversarianteP[i].nascimento_dia, dia_at);
+            }
+            else if (aniversarianteP[i].sexo == 'f' || aniversarianteP[i].sexo == 'F' )
+            {
+                printf("A Professora %s completando ", aniversarianteP[i].nome);
+                fixIdade(idade, aniversarianteP[i].nascimento_dia, dia_at);
+            }
+        }
+    }
+
+    for (int i = 0; i < a_cad; i++)
+    {
+        if (aniversarianteA[i].nascimento_mes == mes_at)
+        {
+            adicionarLinha(aniversarios);
+            aniversarios++;
+            idade = calcularIdade(aniversarianteA[i].nascimento_ano, aniversarianteA[i].nascimento_mes, aniversarianteA[i].nascimento_dia, dia_at, mes_at, ano_at);
+            
+            if (aniversarianteA[i].sexo == 'm' || aniversarianteA[i].sexo == 'M')
+            {
+                printf("O Aluno %s completando ", aniversarianteA[i].nome);
+                fixIdade(idade, aniversarianteA[i].nascimento_dia, dia_at);
+            }
+            else if (aniversarianteA[i].sexo == 'f' || aniversarianteA[i].sexo == 'F')
+            {
+                printf("A Aluna %s completando ", aniversarianteA[i].nome);
+                fixIdade(idade, aniversarianteA[i].nascimento_dia, dia_at);
+            }
+        }
+    }
+    adicionarLinha(aniversarios);   
+    
+
+    if (!aniversarios)
+    {
+        limparTela(windows);
+        printf("Sem aniversariantes do mes.\n");
+    }
+    
+    pressEnter();
+}
+
 
 void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at)
 {
@@ -1350,7 +1478,6 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirProfessores(ordenado, cad, ano_at, mes_at, dia_at);  
     }
 }
-
 
 
   int procurarPessoa(int aluno, long int matricula, pessoa pessoaBuscada[], int dia_at, int mes_at, int ano_at, int a_cad)
@@ -1414,6 +1541,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     return -2;
   }
 
+
   int calcularIdade(int ano_pessoa, int mes_pessoa, int dia_pessoa, int dia_at, int mes_at, int ano_at)
   {
     int idade;
@@ -1429,6 +1557,8 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     }
     return idade;
   }
+
+  
   void mostrarUmaPessoa(pessoa pessoaBuscada[], int dia_at, int mes_at, int ano_at, int i)
     {
         int idade;
@@ -1532,8 +1662,14 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             }
         espaco = 0;
 
+        printf("\n> Nome: '%s' definido com sucesso.\n", pessoa_main[i].nome);
+
+        pressEnter();
+
         limparTela(windows);
     }
+
+    
 
     if (escolha_att == 2 || escolha_att == 0)
     {
@@ -1546,6 +1682,18 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             printf("\nSomente as opcoes F (Feminino) e M (Masculino) sao aceitas!\n\nInsira novamente:  ");
             scanf("%c", &pessoa_main[i].sexo); limparBuffer();
         }
+
+        if (pessoa_main[i].sexo == 'm' || pessoa_main[i].sexo == 'M')
+        {
+            printf("\n> Sexo definido como 'Masculino' com sucesso.\n");
+        }
+
+        else if (pessoa_main[i].sexo == 'f' || pessoa_main[i].sexo == 'F')
+        {
+            printf("\n> Sexo definido como 'Feminino' com sucesso.\n");
+        }
+
+        pressEnter();
 
         limparTela(windows);
     }
@@ -1599,6 +1747,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                     validDate = 1;
                 }
         }
+
+        printf("\n> Data: %.2d/%.2d/%d definida como data de nascimento.\n", pessoa_main[i].nascimento_dia, pessoa_main[i].nascimento_mes, pessoa_main[i].nascimento_ano);
+
+        pressEnter();
         
         limparTela(windows);
     }
@@ -1639,6 +1791,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 scanf(" %ld", &pessoa_main[i].matricula); limparBuffer();
             }else t3++;
         }
+
+        printf("\n> Matricula: %ld definida com sucesso.\n", pessoa_main[i].matricula);
+
+        pressEnter();
 
         limparTela(windows);
     }
@@ -1683,6 +1839,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         pessoa_main[i].cpf[5], pessoa_main[i].cpf[6], pessoa_main[i].cpf[7], 
         pessoa_main[i].cpf[8], pessoa_main[i].cpf[9], pessoa_main[i].cpf[10]);
 
+        printf("\n> CPF: %s definido com sucesso.\n", pessoa_main[i].cpf_formatado);
+
+        pressEnter();
+
         limparTela(windows);
     }
 
@@ -1705,12 +1865,12 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     {
         a_cad++; // passa para a próxima posição do vetor dizendo que a anterior ja esta ocupada por um cadastro
         char SeN;
-        printf("Deseja realizar um novo cadastro? 's' para Sim, 'n' para Nao: ");
+        printf("Deseja realizar um novo cadastro? (S/N): ");
         scanf("%c", &SeN);
         // SeN = getch();
         while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
         {
-            printf("\n\nOpcao invalida. Digite 's' para SIM e 'n' para NAO: ");
+            printf("\n\nOpcao invalida. Digite 'S' para SIM e 'N' para NAO: ");
             scanf("%c", &SeN);
             // SeN = getch();
         }
@@ -1723,7 +1883,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     else 
     {
         printf("Cadastro Atualizado com sucesso!");
-        pressKey();
+        pressEnter();
         *continuar = 0;
     }
 
@@ -1782,7 +1942,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           printf("\n\n");
       }
       limparBuffer();
-      pressKey();
+      pressEnter();
   }
   
   
@@ -1811,7 +1971,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           printf("\n\n");
       }
       limparBuffer();
-      pressKey();
+      pressEnter();
   }
 
 
@@ -1954,6 +2114,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           int contagem_reg = 3;
           while (contagem_reg > 0) 
           {
+              limparTela(windows);
               printf("Limite de disciplinas atingido! Voltando em %d...", contagem_reg);
               delay(1);
               limparTela(windows);
@@ -1988,7 +2149,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
           printf("\n\n");
       }
       limparBuffer();
-      pressKey();
+      pressEnter();
       limparTela(windows);
   }
 
@@ -2002,13 +2163,13 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         if(comparacao == 0)
         {
             printf("disciplina econtrada");
-            pressKey();
+            pressEnter();
             return i;
         }
         else 
         {
             printf("Disciplina nao encontrada");
-            pressKey();
+            pressEnter();
             return -1;
         }
     }
