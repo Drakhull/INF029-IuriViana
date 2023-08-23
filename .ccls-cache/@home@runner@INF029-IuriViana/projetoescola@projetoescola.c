@@ -63,7 +63,11 @@
     long int matriculaProfessor;
     
   }  disciplina;
-  
+//excluir?
+int compararDatas(pessoa pessoa1, pessoa pessoa2);
+
+
+
   int menuPrincipal(int windows);
 
   int menuAtualizar(int windows);
@@ -1017,7 +1021,7 @@
           }
       }
       return 0;
-  }
+  } 
   
   // MENUS
 
@@ -1265,6 +1269,154 @@ void errorMsg(int windows)
   }
 
 
+
+// ORDEM DE NASCIMENTO ANTIGO
+// void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at)
+// {
+//     int ordem = -1;
+//     int verificado = 0;
+//     pessoa ordenado[cad];
+
+//     printf("Ordenar por Nascimento\n");
+//     printf("======================\n\n");
+//     printf("0 - Voltar\n\n");
+//     printf("1 - Ordem Crescente\n\n");
+//     printf("2 - Ordem Decrescente\n\n");
+//     printf("======================\n\n");
+
+//     printf("Como deseja ordenar?: ");
+//     if (scanf("%d", &ordem) != 1)
+//     {
+//       printf("Erro."); pressEnter();
+//     }
+
+//     while (!verificado)
+//     {
+//         if (ordem < 0 || ordem > 2)
+//         {
+//             printf("\nOpcao invalida. Tente Novamente: ");
+//             if (scanf("%d", &ordem) != 1)
+//             {
+//               printf("Erro."); pressEnter();
+//             }
+//         }
+//         else 
+//         {
+//             verificado = 1;
+//         }
+//     }
+
+//     for (int i = 0; i < cad; i++)
+//     {
+//         ordenado[i] = pessoasOrdenar[i];
+//     }
+    
+
+//     if (ordem == 1)
+//     {
+//         for (int i = 0; i < cad; i++)
+//         {
+//             if (ordenado[i].nascimento_ano < ordenado[i+1].nascimento_ano)
+//             {
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+                
+//             }
+//             else if (ordenado[i].nascimento_mes < ordenado[i+1].nascimento_mes && ordenado[i].nascimento_ano == ordenado[i+1].nascimento_ano)
+//             {
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+//             }
+//             else if (ordenado[i].nascimento_dia < ordenado[i+1].nascimento_dia && ordenado[i].nascimento_mes == ordenado[i+1].nascimento_mes)
+//             {
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+//             }
+//         }
+//         if (aluno)
+//         {
+//             exibirAlunos(ordenado, cad, ano_at, mes_at, dia_at);   
+//         }
+//         if (!aluno)
+//         {
+//             exibirProfessores(ordenado, cad, ano_at, mes_at, dia_at);  
+//         }
+//     }
+
+//     else if (ordem == 2)
+//     {
+//         for (int i = 0; i < cad; i++)
+//         {
+//             if (ordenado[i].nascimento_ano > ordenado[i+1].nascimento_ano)
+//             {
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+//             }
+//             else if (ordenado[i].nascimento_mes > ordenado[i+1].nascimento_mes && ordenado[i].nascimento_ano == ordenado[i+1].nascimento_ano)
+//             {
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+//             }
+//             else if (ordenado[i].nascimento_dia > ordenado[i+1].nascimento_dia && ordenado[i].nascimento_mes == ordenado[i+1].nascimento_mes)
+//             {
+//                 ordenado[i+1] = pessoasOrdenar[i];
+//                 strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
+//                 strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+
+//                 ordenado[i] = pessoasOrdenar[i+1];
+//                 strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
+//                 strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+//             }
+//         }
+//         if (aluno)
+//         {
+//             exibirAlunos(ordenado, cad, ano_at, mes_at, dia_at);   
+//         }
+//         if (!aluno)
+//         {
+//             exibirProfessores(ordenado, cad, ano_at, mes_at, dia_at);  
+//         }
+//     }
+// }
+
+
+// ORDEM DE NASCIMENTO NOVO TESTE
+int compararDatas(pessoa pessoa1, pessoa pessoa2)
+{
+    if (pessoa1.nascimento_ano != pessoa2.nascimento_ano) {
+        return pessoa1.nascimento_ano - pessoa2.nascimento_ano;
+    } else if (pessoa1.nascimento_mes != pessoa2.nascimento_mes) {
+        return pessoa1.nascimento_mes - pessoa2.nascimento_mes;
+    } else {
+        return pessoa1.nascimento_dia - pessoa2.nascimento_dia;
+    }
+}
+
 void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at)
 {
     int ordem = -1;
@@ -1274,8 +1426,8 @@ void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, i
     printf("Ordenar por Nascimento\n");
     printf("======================\n\n");
     printf("0 - Voltar\n\n");
-    printf("1 - Ordem Crescente\n\n");
-    printf("2 - Ordem Decrescente\n\n");
+    printf("1 - Mais Novo Para o Mais Velho\n\n");
+    printf("2 - Mais Velho Para o Mais Novo\n\n");
     printf("======================\n\n");
 
     printf("Como deseja ordenar?: ");
@@ -1283,6 +1435,7 @@ void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, i
     {
       printf("Erro."); pressEnter();
     }
+    limparBuffer();
 
     while (!verificado)
     {
@@ -1303,100 +1456,72 @@ void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, i
     for (int i = 0; i < cad; i++)
     {
         ordenado[i] = pessoasOrdenar[i];
+        strcpy(ordenado[i].nome, pessoasOrdenar[i].nome);
+        strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
     }
     
 
     if (ordem == 1)
     {
-        for (int i = 0; i < cad; i++)
-        {
-            if (ordenado[i].nascimento_ano < ordenado[i+1].nascimento_ano)
-            {
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+        int i, j;
+        pessoa aux[1];
 
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
-                
-            }
-            else if (ordenado[i].nascimento_mes < ordenado[i+1].nascimento_mes && ordenado[i].nascimento_ano == ordenado[i+1].nascimento_ano)
-            {
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
-
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
-            }
-            else if (ordenado[i].nascimento_dia < ordenado[i+1].nascimento_dia && ordenado[i].nascimento_mes == ordenado[i+1].nascimento_mes)
-            {
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
-
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
-            }
-        }
-        if (aluno)
+        for (i = 1; i < cad - 1; i++)
         {
-            exibirAlunos(ordenado, cad, ano_at, mes_at, dia_at);   
-        }
-        if (!aluno)
-        {
-            exibirProfessores(ordenado, cad, ano_at, mes_at, dia_at);  
+            aux[0] = ordenado[i];
+            strcpy(aux[0].nome, ordenado[i].nome);
+            strcpy(aux[0].cpf_formatado, ordenado[i].cpf_formatado);
+
+            j = i - 1;
+
+            while (j >= 0 && (compararDatas(aux[0], ordenado[i+i])) > 0) 
+            {
+                ordenado[j+1] = ordenado[j];
+                strcpy(ordenado[j+1].nome, ordenado[j].nome);
+                strcpy(ordenado[j+1].cpf_formatado, ordenado[j].cpf_formatado);
+
+                j--;
+            }
+            ordenado[j+1] = aux[0];
         }
     }
 
     else if (ordem == 2)
     {
-        for (int i = 0; i < cad; i++)
+        int i, j;
+        pessoa aux[1];
+
+        for (i = 1; i < cad - 1; i++)
         {
-            if (ordenado[i].nascimento_ano > ordenado[i+1].nascimento_ano)
-            {
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+            aux[0] = ordenado[i];
+            strcpy(aux[0].nome, ordenado[i].nome);
+            strcpy(aux[0].cpf_formatado, ordenado[i].cpf_formatado);
 
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
-            }
-            else if (ordenado[i].nascimento_mes > ordenado[i+1].nascimento_mes && ordenado[i].nascimento_ano == ordenado[i+1].nascimento_ano)
-            {
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+            j = i - 1;
 
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
-            }
-            else if (ordenado[i].nascimento_dia > ordenado[i+1].nascimento_dia && ordenado[i].nascimento_mes == ordenado[i+1].nascimento_mes)
+            while (j >= 0 && (compararDatas(aux[0], ordenado[i+i])) < 0) 
             {
-                ordenado[i+1] = pessoasOrdenar[i];
-                strcpy(ordenado[i+1].nome, pessoasOrdenar[i].nome);
-                strcpy(ordenado[i+1].cpf_formatado, pessoasOrdenar[i].cpf_formatado);
+                ordenado[j+1] = ordenado[j];
+                strcpy(ordenado[j+1].nome, ordenado[j].nome);
+                strcpy(ordenado[j+1].cpf_formatado, ordenado[j].cpf_formatado);
 
-                ordenado[i] = pessoasOrdenar[i+1];
-                strcpy(ordenado[i].nome, pessoasOrdenar[i+1].nome);
-                strcpy(ordenado[i].cpf_formatado, pessoasOrdenar[i+1].cpf_formatado);
+                j--;
             }
+            ordenado[j+1] = aux[0];
         }
+    }
+       
         if (aluno)
         {
-            exibirAlunos(ordenado, cad, ano_at, mes_at, dia_at);   
+            exibirAlunos(ordenado, cad, ano_at, mes_at, dia_at);
         }
         if (!aluno)
         {
             exibirProfessores(ordenado, cad, ano_at, mes_at, dia_at);  
         }
-    }
 }
+
+
 
 void aniversarianteDia(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at)
 {
@@ -1483,7 +1608,7 @@ void aniversariantesMes(int windows, pessoa aniversarianteA[], pessoa aniversari
 {
     int idade = 0;
     int aniversarios = 0;
-
+    
     void fixIdade(int idade, int nascimento_dia, int dia_at)
     {
         if (nascimento_dia > dia_at)
