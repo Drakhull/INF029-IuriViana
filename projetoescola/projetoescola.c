@@ -36,9 +36,10 @@
   #include <time.h>
   
   #define max 100
-  #define n_alunos 4
+  #define n_alunos 6
   #define n_profs 3
   #define n_disci 3
+
   
   #define cad_a_sucesso -1
   #define cad_invalido -2
@@ -113,7 +114,7 @@ int compararDatas(pessoa pessoa1, pessoa pessoa2);
   
   int menuDisciplinas(int windows);
   
-  int cadastrarDrisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
+  int cadastrarDisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
   
   void exibirDisciplinas(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
 
@@ -159,7 +160,7 @@ int compararDatas(pessoa pessoa1, pessoa pessoa2);
 
     // Data/hora
 
-    int a_cad = 2, p_cad = 2, d_cad = 2;
+    int a_cad = 4, p_cad = 2, d_cad = 2;
     int escolha = -1;
     int aluno = -1;
     int opcao = 0;
@@ -178,6 +179,24 @@ int compararDatas(pessoa pessoa1, pessoa pessoa2);
             alunos[0].sexo = 'F';
   
             // Aluno 2
+            strcpy(alunos[1].cpf_formatado, "xxx.xxx.xxx-xx");
+            alunos[1].matricula = 363546789;
+            strcpy(alunos[1].nome, "Pedro Pascal");
+            alunos[1].nascimento_dia = 22;
+            alunos[1].nascimento_mes = 8;
+            alunos[1].nascimento_ano = 2002;
+            alunos[1].sexo = 'M';
+
+    // Aluno 3
+            strcpy(alunos[1].cpf_formatado, "xxx.xxx.xxx-xx");
+            alunos[1].matricula = 363546789;
+            strcpy(alunos[1].nome, "Pedro Pascal");
+            alunos[1].nascimento_dia = 22;
+            alunos[1].nascimento_mes = 8;
+            alunos[1].nascimento_ano = 2002;
+            alunos[1].sexo = 'M';
+
+    // Aluno 4
             strcpy(alunos[1].cpf_formatado, "xxx.xxx.xxx-xx");
             alunos[1].matricula = 363546789;
             strcpy(alunos[1].nome, "Pedro Pascal");
@@ -945,7 +964,7 @@ int compararDatas(pessoa pessoa1, pessoa pessoa2);
                           {
                               limparTela(windows);
 
-                              d_cad = cadastrarDrisciplina(disciplinas, d_cad, professores, p_cad, windows);
+                              d_cad = cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows);
 
                               limparTela(windows);
                           }
@@ -2112,16 +2131,37 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         }
         limparBuffer();
         
-        for (int j = 0; pessoa_main[i].cpf[j] != '\0'; j++)
+        int cpfValidado = 0;
+
+        while (cpfValidado < 5)
         {
+            // Validacoes basicas
             if (strlen(pessoa_main[i].cpf) != 11)
             {
-                printf("\n\nCPF invalido!\n\nInsira novamente: ");
+                cpfValidado = 0;
+
+                printf("\n\nCPF invalido. Verifique se digitou corretamente.\n\nInsira novamente: ");
                 if (scanf(" %s", pessoa_main[i].cpf) != 1)
                 {
-                  printf("Erro."); pressEnter();
+                printf("Erro."); pressEnter();
                 }
-                limparBuffer();
+            }
+            else cpfValidado++;
+
+            for (int j = 0; pessoa_main[i].cpf[j] != '\0'; j++)
+            {
+                if (pessoa_main[i].cpf[j] > '9' || pessoa_main[i].cpf[j] < '0')
+                {
+                    cpfValidado = 0;
+
+                    printf("Apenas numeros sao permitidos.\n\nInsira novamente: ");
+                    if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                    {
+                    printf("Erro."); pressEnter();
+                    }
+                    limparBuffer();
+                }
+                else cpfValidado++;
             }
 
             for(int j = 0; j < a_cad; j++)
@@ -2129,27 +2169,99 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 if (j == i)j++;
                 if (strcmp(pessoa_main[i].cpf, pessoa_main[j].cpf) == 0)
                 {
-                    printf("\n\nCPF ja existente!\n\nInsira novamente: ");
+                    cpfValidado = 0;
+                    printf("\n\nDEBUG: CPF ja existente!(Mensagem original: 'CPF invalido.')\n\nInsira novamente: ");
                     if (scanf(" %s", pessoa_main[i].cpf) != 1)
                     {
                       printf("Erro."); pressEnter();
                     }
                     limparBuffer();
                 }
+                else cpfValidado++;
             }
+            
             for(int j = 0; j < p_cad; j++)
             {
                 if (j == i)j++;
                 if (strcmp(pessoa_main[i].cpf, pessoa_comp[j].cpf) == 0)
                 {
-                    printf("\n\nCPF ja existente!\n\nInsira novamente: ");
+                    cpfValidado = 0;
+                    printf("\n\nDEBUG: CPF ja existente!(Mensagem original: 'CPF invalido.')\n\nInsira novamente: ");
                     if (scanf(" %s", pessoa_main[i].cpf) != 1)
                     {
                       printf("Erro."); pressEnter();
                     }
                     limparBuffer();
                 }
+                else cpfValidado++;
             }
+            // Fim validacoes basicas
+
+
+            // Validacao do digito verificador (Colocar em funcao separada para reutilizar em projetos futuros)
+
+                // Separando cada digito do CPF para validar
+                int digitos_cpf[11];
+                int k = 0;
+                while (k < 11)
+                {
+                    // DEBUG: printf ("Atribuindo o numero %d, a posicao %d de digitos cpf\n\n", (pessoa_main[i].cpf[k] - 48), k);
+                    digitos_cpf[k] = (pessoa_main[i].cpf[k] - 48);
+                    k++;
+                }
+                // Fim da separacao.
+                
+                // Faz a validacao
+                int verificador1 = 0;
+                int verificador2 = 0;
+                
+                for (int j = 0, multiplicador1 = 10, multiplicador2 = 11; j < 9; j++)
+                {
+                    // DEBUG: printf ("\nDigito %d do CPF: %d\n", j, digitos_cpf[j]);
+
+                    // DEBUG: printf("Verificador 1 antes da atribuicao: %d\nMultiplicador1 Antes: %d\n\n", verificador1, multiplicador1);
+
+                    verificador1 = verificador1 + (digitos_cpf[j] * multiplicador1); //--;
+                    multiplicador1--;
+
+                    // DEBUG: printf ("Verificador 1 depois da atribuicao: %d\nMultiplicador1 depois: %d\n", verificador1, multiplicador1);
+
+                    verificador2 = verificador2 + (digitos_cpf[j] * multiplicador2); //--;
+                    multiplicador2--;
+                }
+
+                // DEBUG: printf("\n\nVERIFICADOR1 %d\n\nVERIFICADOR2 %d", verificador1, verificador2);
+                
+                verificador1 *= 10;
+                verificador1 %= 11;
+
+                verificador2 = ((verificador2 + (verificador1 * 2)) * 10);
+                verificador2 %= 11;
+
+                // DEBUG: printf("\n\nVERIFICADOR1 %d\n\nVERIFICADOR2 %d", verificador1, verificador2);
+
+                if (verificador1 != digitos_cpf[9])
+                {
+                    cpfValidado = 0;
+                    printf("\n\nDEBUG: Problema com digito verificador 1. (Mensagem original: 'CPF invalido.')\n\nInsira novamente: ");
+                    if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                    {
+                        printf("Erro."); pressEnter();
+                    }
+                    limparBuffer();
+                }
+                else if (verificador2 != digitos_cpf[10])
+                {
+                    cpfValidado = 0;
+                    printf("\n\nDEBUG: Problema com digito verificador 2. (Mensagem original: 'CPF invalido.')\n\nInsira novamente: ");
+                    if (scanf(" %s", pessoa_main[i].cpf) != 1)
+                    {
+                        printf("Erro."); pressEnter();
+                    }
+                    limparBuffer();
+                }
+                else cpfValidado++;
+            // Fim da validacao do digito verificador.
         }
     
         sprintf(pessoa_main[i].cpf_formatado, "%c%c%c.%c%c%c.%c%c%c-%c%c", pessoa_main[i].cpf[0], pessoa_main[i].cpf[1], 
@@ -2299,7 +2411,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
   }
 
 
-  int cadastrarDrisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows)
+  int cadastrarDisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows)
   {
       int continuar = 1;
       int i = d_cad;
