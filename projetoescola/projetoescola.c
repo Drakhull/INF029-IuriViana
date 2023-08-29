@@ -2206,7 +2206,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
                 while (k < 11)
                 {
                     // DEBUG: printf ("Atribuindo o numero %d, a posicao %d de digitos cpf\n\n", (pessoa_main[i].cpf[k] - 48), k);
-                    digitos_cpf[k] = (pessoa_main[i].cpf[k] - 48);
+                    if (pessoa_main[i].cpf[k] <= '9' || pessoa_main[i].cpf[k] >= '0')
+                    {
+                        digitos_cpf[k] = (pessoa_main[i].cpf[k] - 48);
+                    }
                     k++;
                 }
                 // Fim da separacao.
