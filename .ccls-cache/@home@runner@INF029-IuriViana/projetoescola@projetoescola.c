@@ -2007,9 +2007,14 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         exibirPessoa(aluno, a_cad);
 
         printf("\nInsira sua data de nascimento DD MM AAAA espacando devidamente: ");
-        if (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
+        while (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
         {
           printf("Erro."); pressEnter();
+          printf("\nInsira sua data de nascimento DD MM AAAA espacando devidamente: ");
+        //   if (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
+        // {
+        //   printf("Erro."); pressEnter();
+        // }
         }
         limparBuffer();
 
@@ -2023,6 +2028,16 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             {
                 validacao++;
             }
+            else if(validacao != 2)
+            {
+                validacao = 0;
+                printf("\n\nData invalida!\n\nInsira Novamente no modo DD MM AAAA: ");
+                if (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
+                {
+                  printf("Erro."); pressEnter();
+                }
+              limparBuffer();
+            } 
             
             if ((pessoa_main[i].nascimento_mes == 1 || pessoa_main[i].nascimento_mes == 3 || pessoa_main[i].nascimento_mes == 5 || 
                 pessoa_main[i].nascimento_mes == 7 || pessoa_main[i].nascimento_mes == 8 || pessoa_main[i].nascimento_mes == 10 || 
