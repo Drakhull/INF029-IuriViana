@@ -1,35 +1,15 @@
-  // Funcionalidades implementadas até então
-  //  Inserir professor
-  //  Inserir aluno
-  //  Inserir disciplina
-  //  Exibir professor
-  //  Exibir aluno
-  //  Exibir disciplina
-  
-  //  Problemas notados e funcionalidades a implementar:
-  //-1 - Programa quebra ao inserir letra em alguns menus Switch Case
-  // 0 - Usar doppelganger no cadastro pessoa;
-  // 1 - Verificação de professor existente para disciplina parou de funcionar (pedir matricula ao inves de nome)
-  // 2 - Melhorar a legibilidade do código/Modularizar mais
-  // 3 - Excesso de laços desnecessários?
-  // 4 - Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo
-  // 5 - Opção de voltar é atualizar, voltar tudo é excluir
-  // 6 - Se ater ao projeto principal e se preocupar com essas funcionalidades depois
+//  Problemas notados e funcionalidades a implementar
+  // 1 - Modularizar mais
+  // 2 - Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo (Usar doppelganger no cadastro pessoa)
+  // 3 - Opção de voltar é atualizar, voltar tudo é excluir
+  // 4 - Implementar opção de voltar após entrar nas opções de inserir
+  // 5 - Criar funções para cada operação de verificação?
+  // 6 - Excluir espaçamentos após digitar algum nome completo etc
+  // 7 - O programa aceita entrada de nome "aBCDEF V"
+  // 8 - Confirmação no final perguntando se quer salvar ou não
+//  Problemas notados e funcionalidades a implementar;
 
-  // !!falta funcionalidades de atualizar e excluir!!
-  // Lembrete: implementar opção de voltar após entrar nas opções de inserir
-  // criar funções para cada operação de verificação?
-  
-  // EXCLUIR ESPAÇAMENTOS APÓS DIGITAR ALGUM NOME COMPLETO ETC
-  // nota de bug: caso o nome seja inserido "aBCDEF V" (primeira letra minuscula e outras maiusculas), o programa aceita
-  
-  // Atualizar aluno
-  // Primeiro eu preciso encontrar o aluno com algum dado dele, como matricula (sistema de busca)
-  // Segundo eu preciso saber qual informação precisa ser alterada (Selecao com switch case?)
-  // Terceiro preciso alterar com uma OPCAO VALIDA e salvar
-  // Tambem e preciso ter uma opção de voltar a qualquer momento ou cancelar o que esta sendo feito
-  // Talvez uma confirmacao no final perguntando se quer salvar ou nao?
-  
+
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h>
@@ -42,7 +22,8 @@
   
   #define cad_a_sucesso -1
   #define cad_invalido -2
-  
+// Structs
+
   typedef struct pessoa
   {
     long int matricula;
@@ -62,13 +43,16 @@
     char codigo[9];
     long int matriculaProfessor;
   }  disciplina;
-  
+// Structs;
+
+
+// Protótipos;
+
   int menuPrincipal(int windows);
 
   int menuAtualizar(int windows);
 
   int menuExibicao(int windows);
-
 
   void listarPorSexo(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at);
 
@@ -77,7 +61,6 @@
   void listarNascimento(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int mes_at, int ano_at);
 
   void buscarPessoa(pessoa pessoaBuscadaP[], pessoa pessoaBuscadaA[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
-
 
   int cadastrar(pessoa pessoa_main[], int a_cad, pessoa pessoa_comp[], int p_cad, int windows, int ano_at, int aluno, int* continuar, int i, int escolha_att);
 
@@ -97,16 +80,13 @@
 
   int compararDatas(pessoa pessoa1, pessoa pessoa2); 
   
-  
   int menuAlunos(int windows);
 
   void exibirAlunos(pessoa alunos[], int a_cad, int ano_at, int mes_at, int dia_at);
   
-  
   int menuProfessores(int windows);
   
   void exibirProfessores(pessoa professores[], int p_cad, int ano_at, int mes_at, int dia_at);
-  
   
   int menuDisciplinas(int windows);
   
@@ -115,11 +95,6 @@
   void exibirDisciplinas(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
 
   int procurarDisciplina(disciplina disciplinaBuscada[], char codigo[], int d_cad);
-  
-  // int atualizarDisciplina();
-  
-  // int excluirDisciplina();
-  
   
   void limparTela(int windows);
   
@@ -130,17 +105,24 @@
   void pressEnter();
 
   void fixQuebraLinhaFgets(char alvo[]);
+
+// Protótipos;
   
   // DEFINIR SISTEMA
+
     int windows = 0;
+
+  // DEFINIR SISTEMA;
+
+
+  // Variavéis tipo pessoa e disciplina
     pessoa alunos[n_alunos];
     pessoa professores[n_profs];
     disciplina disciplinas[n_disci];
+  // Variavéis tipo pessoa e disciplina;
 
   int main (void)
   {
-    
-
     // Data/hora
 
     struct tm *data_hora_atual;
@@ -155,7 +137,7 @@
     int mes_at = data_hora_atual -> tm_mon + 1;
     int dia_at = data_hora_atual -> tm_mday;
 
-    // Data/hora
+    // Data/hora;
 
     int a_cad = 5, p_cad = 2, d_cad = 2;
     int escolha = -1;
@@ -164,6 +146,7 @@
     int continuar;
   
     // TESTES
+    
         // Alunos 
             // Aluno 1
             strcpy(alunos[0].cpf, "12345678912");
@@ -247,10 +230,13 @@
             disciplinas[1].matriculaProfessor = 835467893;
             strncpy(disciplinas[1].codigo, "logpoenb", sizeof(disciplinas[1].codigo) - 1);
             disciplinas[1].semestre = 1;
-    // TESTES
+    
+    // TESTES;
     
       limparTela(windows);
       int sair = 0;
+
+    // Programa Principal (Switch Case)
       while (!sair)
       {
           printf("Menu Principal\n");
@@ -1109,10 +1095,13 @@
                   break;
           }
       }
+    
+    // Programa Principal (Switch Case);
+    
       return 0;
   }
   
-  // MENUS
+// MENUS
 
 void errorMsg(int windows)
 {
@@ -1258,8 +1247,9 @@ void errorMsg(int windows)
   
       return escolha_disci;
   }
+// MENUS;
   
-  // Funcoes
+// Funções
   
   void limparTela(int windows)
   {
@@ -1300,8 +1290,10 @@ void errorMsg(int windows)
     alvo[ln] = '\0'; 
   }
 
+// Funções;
 
-  // Funcionalidades
+
+// Funcionalidades
 
   void buscarPessoa(pessoa pessoaBuscadaP[], pessoa pessoaBuscadaA[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at)
   {
@@ -2814,3 +2806,5 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     }
     return 0;
   }
+
+// Funcionalidades;
