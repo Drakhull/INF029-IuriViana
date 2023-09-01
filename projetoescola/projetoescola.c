@@ -1,4 +1,5 @@
 //  Problemas notados e funcionalidades a implementar
+
   // 1 - Modularizar mais
   // 2 - Fazer um vetor dentro de uma função e passar para a matriz original somente se tudo der certo (Usar doppelganger no cadastro pessoa)
   // 3 - Opção de voltar é atualizar, voltar tudo é excluir
@@ -7,6 +8,7 @@
   // 6 - Excluir espaçamentos após digitar algum nome completo etc
   // 7 - O programa aceita entrada de nome "aBCDEF V"
   // 8 - Confirmação no final perguntando se quer salvar ou não
+
 //  Problemas notados e funcionalidades a implementar;
 
 
@@ -22,6 +24,7 @@
   
   #define cad_a_sucesso -1
   #define cad_invalido -2
+
 // Structs
 
   typedef struct pessoa
@@ -35,14 +38,18 @@
     int nascimento_ano;
     char sexo;
   }  pessoa;
+
   
   typedef struct disciplina
   {
     char nome[max];
     int semestre;
     char codigo[9];
-    long int matriculaProfessor;
+    pessoa * professor;
+    int vagas_a_cad[60];
+    int total_de_cad;
   }  disciplina;
+
 // Structs;
 
 
@@ -50,7 +57,9 @@
 
   int menuPrincipal(int windows);
 
-  int menuAtualizar(int windows);
+  int menuAtualizarPessoas(int windows);
+
+  int menuAttDisciplinas(int windows);
 
   int menuExibicao(int windows);
 
@@ -90,9 +99,9 @@
   
   int menuDisciplinas(int windows);
   
-  int cadastrarDrisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
+  int cadastrarDisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows, int *continuar, int i, int escolha_att);
   
-  void exibirDisciplinas(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows);
+  void exibirDisciplinas(disciplina disciplinas[], int d_cad, int windows);
 
   int procurarDisciplina(disciplina disciplinaBuscada[], char codigo[], int d_cad);
   
@@ -116,27 +125,29 @@
 
 
   // Variavéis tipo pessoa e disciplina
+
     pessoa alunos[n_alunos];
     pessoa professores[n_profs];
     disciplina disciplinas[n_disci];
+
   // Variavéis tipo pessoa e disciplina;
 
   int main (void)
   {
     // Data/hora
 
-    struct tm *data_hora_atual;
-
-    time_t segundos;
-
-    time(&segundos);
-
-    data_hora_atual = localtime(&segundos);
-
-    int ano_at = data_hora_atual -> tm_year + 1900;
-    int mes_at = data_hora_atual -> tm_mon + 1;
-    int dia_at = data_hora_atual -> tm_mday;
-
+      struct tm *data_hora_atual;
+  
+      time_t segundos;
+  
+      time(&segundos);
+  
+      data_hora_atual = localtime(&segundos);
+  
+      int ano_at = data_hora_atual -> tm_year + 1900;
+      int mes_at = data_hora_atual -> tm_mon + 1;
+      int dia_at = data_hora_atual -> tm_mday;
+  
     // Data/hora;
 
     int a_cad = 5, p_cad = 2, d_cad = 2;
@@ -221,13 +232,13 @@
         // Disciplinas
             // Disciplina 1
             strcpy(disciplinas[0].nome, "Matematica");
-            disciplinas[0].matriculaProfessor = 373546789;
+            disciplinas[0].professor = &professores[0];
             strncpy(disciplinas[0].codigo, "matpoenb", sizeof(disciplinas[0].codigo) - 1);
             disciplinas[0].semestre = 1;
             
             // Disciplina 2
             strcpy(disciplinas[1].nome, "Programacao");
-            disciplinas[1].matriculaProfessor = 835467893;
+            disciplinas[1].professor = &professores[1];
             strncpy(disciplinas[1].codigo, "logpoenb", sizeof(disciplinas[1].codigo) - 1);
             disciplinas[1].semestre = 1;
     
@@ -308,6 +319,33 @@
                             limparTela(windows);
                             long int matricula = 0;
 
+                            while (1)
+                            {   
+                                char exibir;
+                                printf("Deseja exibir os alunos? S/N: ");
+                                while (scanf("%c", &exibir) != 1)
+                                {
+                                  printf("Erro.");
+                                  limparBuffer();
+                                  printf("\nTente Novamente: ");
+                                }
+                                if (exibir == 's' || exibir == 'S')
+                                {
+                                    aluno = 1;
+                                    exibirAlunos(alunos, a_cad, ano_at, mes_at, dia_at);
+                                    break;
+                                }
+                                else if (exibir == 'n' || exibir == 'N')
+                                {
+                                    break;
+                                }
+                                else 
+                                {
+                                    printf("Opcao Invalida! Tente novamente:");
+                                    limparTela(windows);
+                                }
+                            }
+
                             printf("Digite a Matricula do Aluno que Deseja Atualizar: ");
                             while (scanf("%ld", &matricula) != 1)
                             {
@@ -375,7 +413,7 @@
                                 {
                                     limparTela(windows);
                                     printf("Menu de Atualizar\n");
-                                    escolha_att = menuAtualizar(windows);
+                                    escolha_att = menuAtualizarPessoas(windows);
                                     switch (escolha_att)
                                         {
                                         case 0:
@@ -697,7 +735,6 @@
                                 }
                             }
 
-                            exibirProfessores(professores, p_cad, ano_at, mes_at, dia_at);
                             printf("\n\nDigite a Matricula do Professor que Deseja Atualizar: ");
                             while (scanf("%ld", &matricula) != 1)
                             {
@@ -765,7 +802,7 @@
                                 {
                                     limparTela(windows);
                                     printf("Menu de Atualizar\n");
-                                    escolha_att = menuAtualizar(windows);
+                                    escolha_att = menuAtualizarPessoas(windows);
                                     switch (escolha_att)
                                         {
                                         case 0:
@@ -900,6 +937,33 @@
                             aluno = 0;
                             long int matricula = 0;
 
+                            while (1)
+                            {   
+                                char exibir;
+                                printf("Deseja exibir os professores? S/N: ");
+                                while (scanf("%c", &exibir) != 1)
+                                {
+                                  printf("Erro.");
+                                  limparBuffer();
+                                  printf("\nTente Novamente: ");
+                                }
+                                if (exibir == 's' || exibir == 'S')
+                                {
+                                    aluno = 0;
+                                    exibirProfessores(professores, p_cad, ano_at, mes_at, dia_at);
+                                    break;
+                                }
+                                else if (exibir == 'n' || exibir == 'N')
+                                {
+                                    break;
+                                }
+                                else 
+                                {
+                                    printf("Opcao Invalida! Tente novamente:");
+                                    limparTela(windows);
+                                }
+                            }
+
                             printf("Digite a Matricula do Professor que Deseja Excluir: ");
                             while (scanf("%ld", &matricula) != 1)
                             {
@@ -997,25 +1061,183 @@
                       {
                           case 0:
                           {
-                              sairDisci = 1;
-                              limparTela(windows);
+                            sairDisci = 1;
+                            limparTela(windows);
                           }
                           break;
                           
                           case 1:
                           {
-                              limparTela(windows);
+                            limparTela(windows);
 
-                              d_cad = cadastrarDrisciplina(disciplinas, d_cad, professores, p_cad, windows);
+                            int continuar = 1;
+                            int i = d_cad;
+                            int escolha_att = 0;
 
-                              limparTela(windows);
+                            while (i < n_disci && continuar && d_cad < n_disci)
+                            {
+                                limparTela(windows);
+                                d_cad = cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows, &continuar, i, escolha_att);
+                                i = d_cad;
+                            }
+                            
+                            if (d_cad >= n_disci && continuar)
+                            {
+                                int contagem_reg = 3;
+                                while (contagem_reg > 0) 
+                                {
+                                    limparTela(windows);
+                                    printf("Limite de cadastros atingido! Voltando em %d...", contagem_reg);
+                                    delay(1);
+                                    limparTela(windows);
+                                    contagem_reg--;
+                                }
+                            }
                           }
                           break;
   
                           case 2:
                           {
-                              
-                              limparTela(windows);
+                            limparTela(windows);
+                            while (1)
+                            {   
+                                char exibir;
+                                printf("Deseja exibir as disciplinas? S/N: ");
+                                while (scanf("%c", &exibir) != 1)
+                                {
+                                  printf("Erro.");
+                                  limparBuffer();
+                                  printf("\nTente Novamente: ");
+                                }
+                                if (exibir == 's' || exibir == 'S')
+                                {
+                                    exibirDisciplinas(disciplinas, d_cad, windows);
+                                    break;
+                                }
+                                else if (exibir == 'n' || exibir == 'N')
+                                {
+                                    break;
+                                }
+                                else 
+                                {
+                                    printf("Opcao Invalida! Tente novamente:");
+                                    limparTela(windows);
+                                }
+                            }
+                            
+                            char disciplina_codigo[10];
+                            printf("\nInsira o Codigo da Disciplina que Deseja Atualizar: ");
+                            while (fgets(disciplina_codigo, 10, stdin) == NULL) 
+                            {
+                                printf("\nAlgo deu errado ao digitar.");
+                                printf("\nTente novamente: ");
+                            }
+                            fixQuebraLinhaFgets(disciplina_codigo);
+                            
+                            limparBuffer();
+
+                            int retorno;
+                            int tentarNovamente = 1;
+                            
+                            retorno = procurarDisciplina(disciplinas, disciplina_codigo, d_cad);
+
+                            while (retorno == -1)
+                            {
+                                limparTela(windows);
+                                printf("Disciplina nao existe\n\n");
+                                printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
+                                while (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                    printf("Erro.");
+                                    limparBuffer();
+                                    printf("\nTente Novamente: ");
+                                }
+                                while (tentarNovamente != 1 && tentarNovamente != 0)
+                                {
+                                    printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
+                                    while (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                        printf("Erro.");
+                                        limparBuffer();
+                                        printf("\nTente Novamente: ");
+                                    }
+                                }
+                                
+                                if (tentarNovamente)
+                                {
+                                    limparTela(windows);
+                                    printf("\nInsira o Codigo da Disciplina que Deseja Atualizar: ");
+                                    while (fgets(disciplina_codigo, 10, stdin) == NULL) 
+                                    {
+                                        printf("\nAlgo deu errado ao digitar.");
+                                        printf("\nTente novamente: ");
+                                    }
+                                    retorno = procurarDisciplina(disciplinas, disciplina_codigo, d_cad);
+                                }
+                                else if (!tentarNovamente)
+                                {
+                                    break;
+                                }
+                            }
+
+
+                            int sairAttDisci = 0;
+                            while (!sairAttDisci && retorno != -2 && retorno != -1)
+                            {   
+                                limparTela(windows);
+                                int escolha_att;
+                                printf("Menu de Atualizar\n");
+                                escolha_att = menuAttDisciplinas(windows);
+
+                                switch (escolha_att)
+                                {
+                                case 0:
+                                    sairAttDisci = 1;
+                                    limparTela(windows);
+
+                                    break;
+
+                                case 1:
+                                    limparTela(windows);
+                                    continuar = 1;
+
+                                    cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows, &continuar, retorno, escolha_att);
+                                    break;
+                                    
+                                case 2:
+                                    limparTela(windows);
+                                    continuar = 1;
+
+                                    cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows, &continuar, retorno, escolha_att);
+                                    
+                                    break;
+                                    
+                                case 3:
+                                    limparTela(windows);
+                                    continuar = 1;
+
+                                    cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows, &continuar, retorno, escolha_att);
+                                    
+                                    break;
+                                    
+                                case 4:
+                                    limparTela(windows);
+                                    continuar = 1;
+
+                                    cadastrarDisciplina(disciplinas, d_cad, professores, p_cad, windows, &continuar, retorno, escolha_att);
+                                    
+                                    break;
+                                
+                                default:
+                                    break;
+                                }
+                            }
+                            
+                            
+
+
+                            
+                            limparTela(windows);
                           }
                           break;
   
@@ -1023,7 +1245,7 @@
                           {
                               limparTela(windows);
 
-                              exibirDisciplinas(disciplinas, d_cad, professores, p_cad, windows);
+                              exibirDisciplinas(disciplinas, d_cad, windows);
 
                               limparTela(windows);
                           }
@@ -1179,7 +1401,7 @@ void errorMsg(int windows)
   }
 
 
-  int menuAtualizar(int windows)
+  int menuAtualizarPessoas(int windows)
   {
       int escolha_att = -1;
       printf("======================\n\n");
@@ -1246,6 +1468,29 @@ void errorMsg(int windows)
       limparBuffer();
   
       return escolha_disci;
+  }
+
+   
+  int menuAttDisciplinas(int windows)
+  {
+      int escolha_att_disci = -1;
+      printf("======================\n\n");
+      printf("|0| - Voltar\n\n");
+      printf("|1| - Atualizar Nome\n\n");
+      printf("|2| - Atualizar Codigo\n\n");
+      printf("|3| - Atualizar Professor\n\n");
+      printf("|4| - Atualizar Semestre\n\n");
+      printf("======================\n\n");
+      printf("Qual deseja acessar?: ");
+  
+      if (scanf("%d", &escolha_att_disci) != 1)
+      {
+        errorMsg(windows);
+      }
+
+      limparBuffer();
+  
+      return escolha_att_disci;
   }
 // MENUS;
   
@@ -1939,11 +2184,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     int espaco = 0;
 
     // pessoa doppelganger[1];
-
-    exibirPessoa(aluno, a_cad);
     
     if (escolha_att == 1 || escolha_att == 0)
     {
+        exibirPessoa(aluno, a_cad);
         printf("\nInsira seu nome: "); 
         if (fgets(pessoa_main[i].nome, max, stdin) == NULL) 
         {
@@ -2070,10 +2314,9 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         printf("\nInsira sua data de nascimento DD MM AAAA espacando devidamente: ");
         while (scanf(" %d%d%d", &pessoa_main[i].nascimento_dia, &pessoa_main[i].nascimento_mes, &pessoa_main[i].nascimento_ano) != 3)
         {
-          
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
+          printf("Erro.");
+          limparBuffer();
+          printf("\nTente Novamente: ");
           printf("\nInsira sua data de nascimento DD MM AAAA espacando devidamente: ");
         }
         limparBuffer();
@@ -2155,10 +2398,10 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         printf("\nInsira sua matricula (9 digitos): ");
         while (scanf(" %ld", &pessoa_main[i].matricula) != 1)
         {
-          
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
+
+            printf("Erro.");
+            limparBuffer();
+            printf("\nTente Novamente: ");
         }
         limparBuffer();
         for (int j = 0, t1 = 0, t2 = 0, t3 = 0; t1 == 0 || t2 == 0 || t3 == 0; j++)
@@ -2400,32 +2643,48 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         limparTela(windows);
     }
 
-        int contagem_reg = 3;
-        while (contagem_reg > 0) 
-        {
-        if (aluno)
-        {
-            printf("Aluno %d ", a_cad+1);
-        }else printf("Professor %d ", a_cad+1);
+        // int contagem_reg = 3;
+        // while (contagem_reg > 0) 
+        // {
+        //     if (aluno)
+        //     {
+        //         printf("Aluno %d ", a_cad+1);
+        //     }
+        //     else 
+        //     {
+        //         printf("Professor %d ", a_cad+1);
+        //     }
+        //     printf("cadastrado com sucesso! Voltando em %d...", contagem_reg);
+        //     delay(1);
+        //     limparTela(windows);
+        //     contagem_reg--;
+        // }
         
-        printf("cadastrado com sucesso! Voltando em %d...", contagem_reg);
-        delay(1);
-        limparTela(windows);
-        contagem_reg--;
-        }
 
         
     if (escolha_att == 0)
     {
+        if (aluno)
+        {
+            printf("Aluno %d ", a_cad+1);
+        }
+        else 
+        {
+            printf("Professor %d ", a_cad+1);
+        }
+        printf("cadastrado com sucesso!");
+        pressEnter();
+
+        limparTela(windows);
+
         a_cad++; // passa para a próxima posição do vetor dizendo que a anterior ja esta ocupada por um cadastro
         char SeN;
         printf("Deseja realizar um novo cadastro? (S/N): ");
         while (scanf("%c", &SeN) != 1)
         {
-          
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
+            printf("Erro.");
+            limparBuffer();
+            printf("\nTente Novamente: ");
         }
         // SeN = getch();
         while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
@@ -2541,245 +2800,276 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
   }
 
 
-  int cadastrarDrisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows)
+  int cadastrarDisciplina(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows, int *continuar, int i, int escolha_att)
   {
-      int continuar = 1;
-      int i = d_cad;
+    if (escolha_att == 1 || escolha_att == 0)
+    {
+        printf("--------Disciplina %d--------", d_cad+1);
   
-      while (i < n_disci && continuar && d_cad < n_disci)
-      {
-          printf("--------Disciplina %d--------", d_cad+1);
-  
-          printf("\nInsira o nome da disciplina: ");
-          if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
-          {
-            printf("Algo deu errado ao digitar.");
-          }
-          fixQuebraLinhaFgets(disciplinas[i].nome); 
-  
-          for (int j = 0; j < n_disci; j++)
-          {
-              if (i == j)j++;
-              if (strcmp(disciplinas[i].nome, disciplinas[j].nome) == 0)
-              {
-                  printf("\n\nNome ja existente!\n\nInsira novamente: ");
-                  if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
-                  {
+        printf("\nInsira o nome da disciplina: ");
+        if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+        {
+        printf("Algo deu errado ao digitar.");
+        }
+        fixQuebraLinhaFgets(disciplinas[i].nome); 
+
+        for (int j = 0; j < n_disci; j++)
+        {
+            if (i == j)j++;
+            if (strcmp(disciplinas[i].nome, disciplinas[j].nome) == 0)
+            {
+                printf("\n\nNome ja existente!\n\nInsira novamente: ");
+                
+                if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                {
                     printf("Algo deu errado ao digitar.");
-                  }
-                  limparBuffer();
-                  fixQuebraLinhaFgets(disciplinas[i].nome);
-              }
-              while (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
-              {
-                  if (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
-                  {
-                      printf("\nA primeira letra esta em minusculo!\n\nInsira novamente:  ");
-                      if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
-                      {
+                }
+                fixQuebraLinhaFgets(disciplinas[i].nome);
+            }
+            while (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
+            {
+                if (disciplinas[i].nome[0] < 'A' || disciplinas[i].nome[0] > 'Z')
+                {
+                    printf("\nA primeira letra esta em minusculo!\n\nInsira novamente:  ");
+
+                    if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                    {
                         printf("Algo deu errado ao digitar.");
-                      }
-                      limparBuffer();
-                      fixQuebraLinhaFgets(disciplinas[i].nome);
-                  }
-                  for (int j = 0; disciplinas[i].nome[j] != '\0'; j++)
-                  {
-                      if (!((disciplinas[i].nome[j] >= 'A' && disciplinas[i].nome[j] <= 'Z') || (disciplinas[i].nome[j] >= 'a' && disciplinas[i].nome[j] <= 'z') || (disciplinas[i].nome[j] == ' ')))
-                      {
-                          printf("\nO nome nao pode conter caracteres especiais ou acento!\n\nInsira novamente:  ");
-                          if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
-                          {
+                    }
+                    fixQuebraLinhaFgets(disciplinas[i].nome);
+                }
+                for (int j = 0; disciplinas[i].nome[j] != '\0'; j++)
+                {
+                    if (!((disciplinas[i].nome[j] >= 'A' && disciplinas[i].nome[j] <= 'Z') || (disciplinas[i].nome[j] >= 'a' && disciplinas[i].nome[j] <= 'z') || (disciplinas[i].nome[j] == ' ')))
+                    {
+                        printf("\nO nome nao pode conter caracteres especiais ou acento!\n\nInsira novamente:  ");
+
+                        if (fgets(disciplinas[i].nome, max, stdin) == NULL) 
+                        {
                             printf("Algo deu errado ao digitar.");
-                          }
-                          limparBuffer();
-                          fixQuebraLinhaFgets(disciplinas[i].nome);
-                      }
-                  }
-              }
-          }
+                        }
+                        fixQuebraLinhaFgets(disciplinas[i].nome);
+                    }
+                }
+            }
+        }
+    }
+    
+          
   
-          limparTela(windows);
-          printf("--------Disciplina %d--------", d_cad+1);
-  
-          printf("\nInsira o codigo da disciplina 8 digitos: "); 
-          limparBuffer();
-          if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
-          {
-            printf("Algo deu errado ao digitar.");
-          }
-          fixQuebraLinhaFgets(disciplinas[i].codigo);
-  
-          for (int j = 0, verify = 0; j < d_cad; j++)
-          {
-              while (verify < 2)
-              {
-                  verify = 0;
-                  if (strlen(disciplinas[i].codigo) == 8)
-                  {
-                      printf("\n\nO codigo precisa ter 8 digitos.\n\nInsira novamente: ");
-                      if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
-                      {
-                        printf("Algo deu errado ao digitar.");
-                      }
-                      limparBuffer();
-                      fixQuebraLinhaFgets(disciplinas[i].codigo);
-                  }else verify++;
-  
-                  for (int k = 0; k < d_cad; k++)
-                  {
-                      if (i == k)k++;
-                      if (strcmp(disciplinas[i].codigo, disciplinas[k].codigo) == 0)
-                      {
-                          printf("\n\nCodigo ja existente!\n\nInsira novamente: "); 
-                          limparBuffer();
-                          if (fgets(disciplinas[i].codigo, 9, stdin) == NULL) 
-                          {
-                            printf("Algo deu errado ao digitar.");
-                          }
-                          fixQuebraLinhaFgets(disciplinas[i].codigo);
-                      }else verify++;
-                  }
-              }
-          }
-  
-          limparTela(windows);
-          printf("--------Disciplina %d--------", d_cad+1);
-  
-          printf("\nInsira a matricula do professor da disciplina de %s: ", disciplinas[i].nome); 
-          while (scanf(" %ld", &disciplinas[i].matriculaProfessor) != 1)
-          {
-            
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-          }
-          for (int k = 0, continuare = 1; k < p_cad && continuare; k++)
-          {
-              while (disciplinas[i].matriculaProfessor != professores[k].matricula)
-              {
-                  printf("\n\nMatricula Invalida. Verifique se digitou corretamente.\n\nInsira novamente: ");
-                  while (scanf(" %ld", &disciplinas[i].matriculaProfessor) != 1)
-                  {
-                    
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-                  }
-              }
-  
-              if (disciplinas[i].matriculaProfessor == professores[k].matricula)
-              {
-                  continuare = 0;
-              }
-          }
-  
-          limparTela(windows);
-          printf("--------Disciplina %d--------", d_cad+1);
-  
-          printf("\nInsira o semestre da disciplina. Ex: 1, 2, 3... : "); 
-          limparBuffer();
-          while (scanf("%d", &disciplinas[i].semestre) != 1)
-          {
-            
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-          }
-  
-          while (disciplinas[i].semestre < 1 || disciplinas[i].semestre > 14)
-          {
-              printf("\n\nOpcao invalida!\nInsira novamente: "); 
-              limparBuffer();
-              while (scanf("%d", &disciplinas[i].semestre) != 1)
-              {
-                
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-              } 
-          }
-  
-          int contagem_reg = 3;
-          while (contagem_reg > 0) 
-          {
-              printf("Disciplina %d cadastrada com sucesso! Voltando em %d...", d_cad+1, contagem_reg);
-              delay(1);
-              limparTela(windows);
-              contagem_reg--;
-          }
-  
-          d_cad++;
-          limparBuffer();
-          char SeN;
-          printf("Deseja cadastrar mais uma disciplina? 's' para Sim, 'n' para Nao: ");
-          while (scanf("%c", &SeN) != 1)
-          {
-            
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-          }
-          // SeN = getch();
-          while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
-          {
-              printf("\n\nOpcao invalida. Digite 's' para SIM e 'n' para NAO: ");
-              while (scanf("%c", &SeN) != 1)
-              {
-                
-                                  printf("Erro.");
-                                  limparBuffer();
-                                  printf("\nTente Novamente: ");
-              }
-              // SeN = getch();
-          }
-          if (SeN == 'n' || SeN == 'N')
-          {   
-              continuar = 0;
-              limparTela(windows);
-          }
-      }
-  
-  
-      if (d_cad >= n_disci && continuar)
-      {
-          int contagem_reg = 3;
-          while (contagem_reg > 0) 
-          {
-              limparTela(windows);
-              printf("Limite de disciplinas atingido! Voltando em %d...", contagem_reg);
-              delay(1);
-              limparTela(windows);
-              contagem_reg--;
-          }
-      }
-      return d_cad;
-      limparTela(windows);
+    if (escolha_att == 2 || escolha_att == 0)
+    {
+        limparTela(windows);
+        int valido = 0;
+        printf("--------Disciplina %d--------", d_cad+1);
+        int etapa = 0;
+        while(!valido)
+        {
+            char disciplina_codigo[10];
+            switch(etapa)
+            {
+                case 0:
+                {
+                    printf("\nInsira o codigo da disciplina 8 digitos: ");
+                    while (fgets(disciplina_codigo, 10, stdin) == NULL) 
+                    {
+                        printf("\nAlgo deu errado ao digitar.");
+                        printf("\nTente novamente: ");
+                    }
+                    limparBuffer();
+                    fixQuebraLinhaFgets(disciplina_codigo);
+
+                    etapa = 1;
+                }
+                break;
+
+                case 1:
+                {
+                    if(strlen(disciplina_codigo) != 8)
+                    {
+                        printf("\nO nome precisa ter 8 digitos!\n");
+                        etapa = 0;
+                    }
+                    else
+                    {
+                        etapa = 2;
+                    }
+                }
+                break;
+
+                case 2:
+                {
+                    for (int k = 0; k < d_cad; k++)
+                    {
+                        if (strcmp(disciplina_codigo, disciplinas[k].codigo) == 0)
+                        {
+                            printf("\n\nCodigo ja existentente!");
+                            etapa = 0;
+                            break;
+                        }
+                    }
+                    etapa = 3;
+                }
+                break;
+
+                case 3:
+                {
+                    strcpy(disciplinas[i].codigo, disciplina_codigo);
+                    valido = 1;
+                }
+                break;
+            }
+        }
+    }     
+          
+
+    if (escolha_att == 3 || escolha_att == 0)
+    { 
+        limparTela(windows);
+        printf("--------Disciplina %d--------", d_cad+1);
+
+        long int matriculaProfessor = 0;
+
+        printf("\nInsira a matricula do professor da disciplina de %s: ", disciplinas[i].nome); 
+        while (scanf(" %ld", &matriculaProfessor) != 1)
+        {
+            printf("Erro.");
+            limparBuffer();
+            printf("\nTente Novamente: ");
+        }
+
+        int encontrado = 0;
+        while (!encontrado)
+        {
+            for (int k = 0; k < p_cad; k++)
+            {
+                if (matriculaProfessor == professores[k].matricula)
+                {
+                    disciplinas[i].professor = &professores[k];
+                    encontrado = 1;
+                    break;
+                }
+            }
+
+            if (!encontrado)
+            {
+                printf("\n\nMatricula Invalida. Verifique se digitou corretamente.\n\nInsira novamente: ");
+                while (scanf(" %ld", &matriculaProfessor) != 1)
+                {
+                    printf("Erro.");
+                    limparBuffer();
+                    printf("\nTente Novamente: ");
+                }
+            }
+        }
+        
+    }
+          
+          
+    if (escolha_att == 4 || escolha_att == 0)
+    { 
+        limparTela(windows);
+        printf("--------Disciplina %d--------", d_cad+1);
+
+        printf("\nInsira o semestre da disciplina. Ex: 1, 2, 3... : "); 
+        limparBuffer();
+        while (scanf("%d", &disciplinas[i].semestre) != 1)
+        {
+        printf("Erro.");
+        limparBuffer();
+        printf("\nTente Novamente: ");
+        }
+
+        while (disciplinas[i].semestre < 1 || disciplinas[i].semestre > 14)
+        {
+            printf("\n\nOpcao invalida!\nInsira novamente: "); 
+            limparBuffer();
+            while (scanf("%d", &disciplinas[i].semestre) != 1)
+            {
+            printf("Erro.");
+            limparBuffer();
+            printf("\nTente Novamente: ");
+            } 
+        }
+    }
+        limparTela(windows);
+
+        // int contagem_reg = 3;
+        // while (contagem_reg > 0) 
+        // {
+        //     printf("Disciplina %d cadastrada com sucesso! Voltando em %d...", d_cad+1, contagem_reg);
+        //     delay(1);
+        //     limparTela(windows);
+        //     contagem_reg--;
+        // }
+
+        printf("Disciplina %d cadastrada com sucesso!", d_cad+1);
+        pressEnter();
+
+    if (escolha_att == 0)
+    {
+        d_cad++;
+        limparBuffer();
+        char SeN;
+        printf("Deseja cadastrar mais uma disciplina? 's' para Sim, 'n' para Nao: ");
+        while (scanf("%c", &SeN) != 1)
+        {
+            printf("Erro.");
+            limparBuffer();
+            printf("\nTente Novamente: ");
+        }
+        // SeN = getch();
+        while (SeN != 's' && SeN != 'n' && SeN != 'S' && SeN != 'N')
+        {
+            printf("\n\nOpcao invalida. Digite 's' para SIM e 'n' para NAO: ");
+            while (scanf("%c", &SeN) != 1)
+            {
+                printf("Erro.");
+                limparBuffer();
+                printf("\nTente Novamente: ");
+            }
+            // SeN = getch();
+        }
+
+        if (SeN == 'n' || SeN == 'N')
+        {   
+            *continuar = 0;
+            limparTela(windows);
+        }
+    }
+    else 
+    {
+        printf("Cadastro Atualizado com sucesso!");
+        pressEnter();
+        *continuar = 0;
+    }
+
+    if (escolha_att == 0)
+    {
+        return d_cad;
+    }
+    return 0;
+    
+    limparTela(windows);
   }
 
   
-  void exibirDisciplinas(disciplina disciplinas[], int d_cad, pessoa professores[], int p_cad, int windows)
+  void exibirDisciplinas(disciplina disciplinas[], int d_cad, int windows)
   {
       for (int i = 0; i < d_cad; i++)
       {
           printf("--------------Disciplina %d--------------", i+1);
-          printf("\nNome: "); puts(disciplinas[i].nome);
+
+          printf("\n\nNome: %s", disciplinas[i].nome);
           
-          printf("\nCodigo: "); puts(disciplinas[i].codigo);
-          
+          printf("\n\nCodigo: %s", disciplinas[i].codigo);
+
+          printf("\n\nProfessor: %s", disciplinas[i].professor->nome);
   
-          printf("\nProfessor: ");
-          for (int j = 0; j < p_cad; j++)
-          {
-              if (disciplinas[i].matriculaProfessor == professores[j].matricula)
-              {
-                  puts(professores[j].nome);
-              }
-          }
-  
-          printf("\nSemestre: %d", disciplinas[i].semestre);
+          printf("\n\nSemestre: %d", disciplinas[i].semestre);
+
           printf("\n\n");
       }
-      limparBuffer();
       pressEnter();
       limparTela(windows);
   }
@@ -2793,18 +3083,110 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         comparacao = strcmp(codigo, disciplinaBuscada[i].codigo);
         if(comparacao == 0)
         {
-            printf("disciplina econtrada");
+            printf("Disciplina econtrada!");
             pressEnter();
             return i;
         }
         else 
         {
-            printf("Disciplina nao encontrada");
+            printf("Disciplina nao encontrada.");
             pressEnter();
             return -1;
         }
     }
     return 0;
   }
+
+// void inserirAlunoDisciplina(disciplina* entrada, pessoa* lista_alunos, int total_alunos){
+// 	int matricula = 0;
+// 	int etapa = 0;
+// 	int sair = 0;
+// 	char escolha_aluno_insercao;
+// 	while(!sair){
+// 		switch(etapa){
+// 			case 0:{
+// 				titulo("CADASTRANDO ALUNO EM DISCIPLINA", '-', 0);
+// 				printf("[0] - SAIR\n");
+// 				printf("[1] - CADASTRAR ALUNO POR MATRICULA\n");
+// 				printf("[2] - VER ALUNOS E CADASTRAR\n");
+// 				titulo("CADASTRANDO ALUNO EM DISCIPLINA", '-', 1);
+// 				escolha_aluno_insercao = leia_char("> Sua escolha: ");
+// 				switch(escolha_aluno_insercao){
+// 					case '0':{
+// 						sair = 1;
+// 						break;
+// 					}
+// 					case'1':{
+// 						etapa = 1;
+// 						break;
+// 					}
+// 					case'2': {
+// 						titulo("LISTANDO PESSOAS", '-', 1);
+// 						ordem_cadastro(lista_alunos, total_alunos);
+// 						etapa = 1;
+// 						break;
+// 					}
+// 					default:{
+// 						titulo("OPCAO INVALIDA!", '~', 0);
+// 						break;
+// 					}
+// 				}
+// 				break;
+// 			}
+// 			case 1:{
+// 				matricula = leia_int_longo("> Digite a matricula do aluno: ");
+// 				if(!disciplina_aluno_valido(lista_alunos, total_alunos, matricula)){
+// 					titulo("NAO EXISTE ALUNO COM A MATRICULA DIGITADA!", '~', 0);
+// 				}
+// 				else{
+// 					etapa = 2;
+// 				}
+// 				break;
+// 			}
+// 			case 2:{
+// 				if(!disciplina_aluno_existe(entrada, matricula)){
+// 					char texto[100];
+// 					char escolha;
+// 					if(lista_alunos[matricula - 1].sexo == 'M'){
+// 						sprintf(texto,"> Deseja cadastrar %s como aluno de %s?", lista_alunos[matricula - 1].nome, entrada->nome);
+// 					}
+// 					else{
+// 						sprintf(texto,"> Deseja cadastrar %s como aluna de %s?", lista_alunos[matricula - 1].nome, entrada->nome);
+// 					}
+// 					titulo(texto, '=', 0);
+// 					printf("[0] - CANCELAR\n");
+// 					printf("[1] - CONFIRMAR\n");
+// 					printf("[2] - DIGITAR NOVAMENTE\n");
+// 					titulo(texto, '=', 1);
+// 					escolha_aluno_insercao = leia_char("> Sua escolha: ");
+// 					switch(escolha_aluno_insercao){
+// 						case'0':{
+// 							etapa = 0;
+// 							break;
+// 						}
+// 						case'1':{
+// 							entrada->alunos_cadastrados[entrada->total_alunos_cadastrados] = matricula;
+// 							entrada->total_alunos_cadastrados += 1;
+// 							lista_alunos[matricula - 1].qtd_disciplinas += 1;
+// 							titulo("ALUNO CADASTRADO COM SUCESSO!", '=', 0);
+// 							etapa = 0;
+// 							break;
+// 						}
+// 						case '2':{
+// 							etapa = 1;
+// 							break;
+// 						}
+					
+// 					}
+// 				}			
+// 				else{
+// 					titulo("JA EXISTE UM ALUNO COM A MATRICULA DIGITADA!", '~', 0);
+// 					etapa = 1;
+// 				}
+// 				break;
+// 			}
+// 		}
+// 	}
+// }
 
 // Funcionalidades;
