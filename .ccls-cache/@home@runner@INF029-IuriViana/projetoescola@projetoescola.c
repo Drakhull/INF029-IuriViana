@@ -81,6 +81,8 @@
 
   int excluirPessoa(pessoa alvoExclusao[], int posicaoVetor, int a_cad);
 
+  int excluirDisciplina(disciplina alvoExclusao[], int posicaoVetor, int d_cad);
+
   int calcularIdade(int ano_pessoa, int mes_pessoa, int dia_pessoa, int dia_at, int mes_at, int ano_at);
 
   void aniversarianteDia(int windows, pessoa aniversarianteA[], pessoa aniversarianteP[], int a_cad, int p_cad, int dia_at, int mes_at, int ano_at);
@@ -1109,6 +1111,7 @@
                                   limparBuffer();
                                   printf("\nTente Novamente: ");
                                 }
+                                limparBuffer();
                                 if (exibir == 's' || exibir == 'S')
                                 {
                                     exibirDisciplinas(disciplinas, d_cad, windows);
@@ -1126,15 +1129,17 @@
                             }
                             
                             char disciplina_codigo[10];
+                            limparBuffer();
                             printf("\nInsira o Codigo da Disciplina que Deseja Atualizar: ");
                             while (fgets(disciplina_codigo, 10, stdin) == NULL) 
                             {
                                 printf("\nAlgo deu errado ao digitar.");
                                 printf("\nTente novamente: ");
+                                limparBuffer();
                             }
                             fixQuebraLinhaFgets(disciplina_codigo);
                             
-                            limparBuffer();
+                            
 
                             int retorno;
                             int tentarNovamente = 1;
@@ -1144,11 +1149,12 @@
                             while (retorno == -1)
                             {
                                 limparTela(windows);
+                                limparBuffer();
                                 printf("Disciplina nao existe\n\n");
                                 printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
                                 while (scanf("%d", &tentarNovamente) != 1)
                                 {
-                                    printf("Erro.");
+                                    printf("\nErro.");
                                     limparBuffer();
                                     printf("\nTente Novamente: ");
                                 }
@@ -1157,7 +1163,7 @@
                                     printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
                                     while (scanf("%d", &tentarNovamente) != 1)
                                     {
-                                        printf("Erro.");
+                                        printf("\nErro.");
                                         limparBuffer();
                                         printf("\nTente Novamente: ");
                                     }
@@ -1244,7 +1250,7 @@
                           case 3:
                           {
                               limparTela(windows);
-
+                              
                               exibirDisciplinas(disciplinas, d_cad, windows);
 
                               limparTela(windows);
@@ -1254,19 +1260,154 @@
                           case 4:
                           {
                             limparTela(windows);
-                            int retorno;
-                            char codigo[9];
-                            printf("Digite o Codigo da Discpilina: ");
-                            while (scanf("%s", codigo) != 1)
-                            {
-                              
+                            while (1)
+                            {   
+                                char exibir;
+                                printf("Deseja exibir as disciplinas? S/N: ");
+                                while (scanf("%c", &exibir) != 1)
+                                {
                                   printf("Erro.");
                                   limparBuffer();
                                   printf("\nTente Novamente: ");
+                                }
+                                limparBuffer();
+                                if (exibir == 's' || exibir == 'S')
+                                {
+                                    exibirDisciplinas(disciplinas, d_cad, windows);
+                                    break;
+                                }
+                                else if (exibir == 'n' || exibir == 'N')
+                                {
+                                    break;
+                                }
+                                else 
+                                {
+                                    printf("Opcao Invalida! Tente novamente:");
+                                    limparTela(windows);
+                                }
                             }
-                            retorno = procurarDisciplina(disciplinas, codigo, d_cad);
-                            printf ("\nRetorno %d", retorno);
-                            pressEnter();
+                            
+                            char disciplina_codigo[10];
+                            limparBuffer();
+                            printf("\nInsira o Codigo da Disciplina que Deseja Excluir: ");
+                            while (fgets(disciplina_codigo, 10, stdin) == NULL) 
+                            {
+                                printf("\nAlgo deu errado ao digitar.");
+                                printf("\nTente novamente: ");
+                                limparBuffer();
+                            }
+                            fixQuebraLinhaFgets(disciplina_codigo);
+                            
+                            int retorno;
+                            int tentarNovamente = 1;
+                            
+                            retorno = procurarDisciplina(disciplinas, disciplina_codigo, d_cad);
+
+                            while (retorno == -1)
+                            {
+                                limparTela(windows);
+                                limparBuffer();
+                                printf("Disciplina nao existe\n\n");
+                                printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
+                                while (scanf("%d", &tentarNovamente) != 1)
+                                {
+                                    printf("\nErro.");
+                                    limparBuffer();
+                                    printf("\nTente Novamente: ");
+                                }
+                                while (tentarNovamente != 1 && tentarNovamente != 0)
+                                {
+                                    printf("Tente novamente pressionando 1 ou pressione 0 para voltar: ");
+                                    while (scanf("%d", &tentarNovamente) != 1)
+                                    {
+                                        printf("\nErro.");
+                                        limparBuffer();
+                                        printf("\nTente Novamente: ");
+                                    }
+                                }
+                                
+                                if (tentarNovamente)
+                                {
+                                    limparTela(windows);
+                                    printf("\nInsira o Codigo da Disciplina que Deseja Excluir: ");
+                                    while (fgets(disciplina_codigo, 10, stdin) == NULL) 
+                                    {
+                                        printf("\nAlgo deu errado ao digitar.");
+                                        printf("\nTente novamente: ");
+                                    }
+                                    retorno = procurarDisciplina(disciplinas, disciplina_codigo, d_cad);
+                                    
+                                    limparBuffer();
+                                    
+                                    limparTela(windows);
+                                    
+                                  	
+								}
+								else if (!tentarNovamente)
+                                {
+                                	limparTela(windows);
+                                	break;
+								}
+                                    
+                                    limparTela(windows);
+                            }
+                                
+                            if (!tentarNovamente)
+                                {
+                                	limparTela(windows);
+                                	break;
+								}
+                            
+                            
+                                
+                            
+                            if (retorno != -1)
+                            {          
+                                      limparTela(windows);
+	                                    printf("--------------Disciplina %d--------------", retorno+1);
+	                          
+	                                    printf("\n\nNome: %s", disciplinas[retorno].nome);
+	                                    
+	                                    printf("\n\nCodigo: %s", disciplinas[retorno].codigo);
+	                          
+	                                    printf("\n\nProfessor: %s", disciplinas[retorno].professor->nome);
+	                            
+	                                    printf("\n\nSemestre: %d", disciplinas[retorno].semestre);
+	                          
+	                                    printf("\n\n");
+	                                    
+	                                    limparBuffer();
+	                                    printf("Deseja continuar? (S/N): ");
+	                                    
+	                                    char SeN;
+	                                    while (scanf("%c", &SeN) != 1) 
+	                                    {
+	                                        printf("\nAlgo deu errado ao digitar.");
+	                                        printf("\nTente novamente: ");
+	                                    }
+	                                     if (SeN == 'n'|| SeN == 'N')
+		                                {
+		                                	   limparTela(windows);
+                                          limparBuffer();
+                                          printf("Operacao cancelada.\n\n");
+                                          pressEnter();
+                                        limparTela(windows);
+		                                    break;
+		                                }
+		                                else if (SeN == 's'|| SeN == 'S')
+		                                {
+			                                limparTela(windows);
+			                                limparBuffer();
+	                            			char nome[100];
+	                            			strcpy(nome, disciplinas[retorno].nome);
+	                            			printf("Disciplina %s excluida com sucesso!", nome);
+	                            			pressEnter();
+	                            			d_cad = excluirDisciplina(disciplinas, retorno, d_cad);
+	                            			
+	                            			
+										}
+                            }
+                            
                             limparTela(windows);
                           }
                           break;
@@ -2740,6 +2881,28 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
     
     return 0;
   }
+
+
+  int excluirDisciplina(disciplina alvoExclusao[], int posicaoVetor, int d_cad)
+  {
+    if (posicaoVetor < (d_cad - 1))
+    {
+        while (posicaoVetor < (d_cad -1))
+        {
+            alvoExclusao[posicaoVetor] = alvoExclusao[posicaoVetor + 1];
+            posicaoVetor++;
+        }
+        d_cad--;
+        return d_cad;
+    }
+    else if (posicaoVetor == (d_cad - 1))
+    {
+        d_cad--;
+        return d_cad;
+    }
+    
+    return 0;
+  }
   
   
   void exibirAlunos(pessoa alunos[], int a_cad, int ano_at, int mes_at, int dia_at)
@@ -3003,11 +3166,12 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
         //     contagem_reg--;
         // }
 
-        printf("Disciplina %d cadastrada com sucesso!", d_cad+1);
-        pressEnter();
+        
 
     if (escolha_att == 0)
     {
+        printf("Disciplina %d cadastrada com sucesso!", d_cad+1);
+        pressEnter();
         d_cad++;
         limparBuffer();
         char SeN;
@@ -3070,6 +3234,7 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
 
           printf("\n\n");
       }
+      limparBuffer();
       pressEnter();
       limparTela(windows);
   }
@@ -3087,14 +3252,11 @@ void listarOrdemABC(int aluno, pessoa pessoasOrdenar[], int cad, int dia_at, int
             pressEnter();
             return i;
         }
-        else 
-        {
-            printf("Disciplina nao encontrada.");
-            pressEnter();
-            return -1;
-        }
     }
-    return 0;
+    
+	  printf("Disciplina nao encontrada.");
+    pressEnter();
+    return -1;
   }
 
 // void inserirAlunoDisciplina(disciplina* entrada, pessoa* lista_alunos, int total_alunos){
