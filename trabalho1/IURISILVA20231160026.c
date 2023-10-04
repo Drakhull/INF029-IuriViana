@@ -11,10 +11,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome: Iuri Viana Portela Cruz e Silva
+//  email: iurii.vianna@gmail.com
+//  Matrícula: 20231160026
+//  Semestre: 2º
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016
@@ -22,7 +22,7 @@
 // #################################################
 
 #include <stdio.h>
-#include "IuriSilva20231160026.h" // Substitua pelo seu arquivo de header renomeado
+#include "IURISILVA20231160026.h" // Substitua pelo seu arquivo de header renomeado
 #include <stdlib.h>
 /*
 ## função utilizada para testes  ##

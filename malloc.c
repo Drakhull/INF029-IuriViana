@@ -13,6 +13,8 @@ int main(void)
 	
 	free(p);
   
+  free(&p);
+  
 	int *k = malloc(sizeof(int));
 
   *k = 555;

@@ -3,35 +3,35 @@
 #include <string.h>
 
 /*Errors*/
-#define FAILURE 0
-#define SUCCESS 1
+  #define FAILURE 0
+  #define SUCCESS 1
 /*Errors*/
 
 /*Allocations*/
-#define ch 100
-#define numMax 20
+  #define ch 100
+  #define numMax 30
 /*Allocations*/
 
 
 #include <stdio.h>
 
-int main(void)
-{
-    char a[666];
-    printf("char        : %lu byte\n", sizeof(char));
-    printf("int         : %lu bytes\n", sizeof(int));
-    printf("float       : %lu bytes\n", sizeof(float));
-    printf("double      : %lu bytes\n", sizeof(double));
-    printf("long        : %lu bytes\n", sizeof(long));
-    printf("short       : %lu bytes\n", sizeof(short));
-    printf("short int   : %lu bytes\n", sizeof(short int));
-    printf("long int    : %lu bytes\n", sizeof(long int));
-    printf("long double : %lu bytes\n", sizeof(long double));
-    printf("Tam A       : %lu bytes\n", sizeof a);
+// int main(void)
+// {
+//     char a[666];
+//     printf("char        : %lu byte\n", sizeof(char));
+//     printf("int         : %lu bytes\n", sizeof(int));
+//     printf("float       : %lu bytes\n", sizeof(float));
+//     printf("double      : %lu bytes\n", sizeof(double));
+//     printf("long        : %lu bytes\n", sizeof(long));
+//     printf("short       : %lu bytes\n", sizeof(short));
+//     printf("short int   : %lu bytes\n", sizeof(short int));
+//     printf("long int    : %lu bytes\n", sizeof(long int));
+//     printf("long double : %lu bytes\n", sizeof(long double));
+//     printf("Tam A       : %lu bytes\n", sizeof a);
 
 
-    return 0;
-}
+//     return 0;
+// }
 
 int readf(char path[], FILE **file)
 {
@@ -94,6 +94,7 @@ int main(void)
         }
     }
 
+
     printf("\n\nArchive numbers: ");
     FILE *f_out = fopen("RL0Q2.out", "w");
     for (int i = 0; i < numMax; i++)
@@ -102,6 +103,7 @@ int main(void)
         if (i < (numMax - 1))
         {
             fprintf(f_out, " ");
+          
         }
     }
 

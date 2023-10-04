@@ -22,7 +22,7 @@
 // #################################################
 
 #include <stdio.h>
-#include "IuriSilva20231160026.h" // Substitua pelo seu arquivo de header renomeado
+#include "IURISILVA20231160026.h" // Substitua pelo seu arquivo de header renomeado
 #include <stdlib.h>
 /*
 ## função utilizada para testes  ##
