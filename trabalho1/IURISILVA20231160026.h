@@ -23,6 +23,8 @@
 #ifndef TRABALHO1_IURISILVA20231160026_H
 #define TRABALHO1_IURISILVA20231160026_H
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 typedef struct DQ
 {
@@ -111,39 +113,39 @@ int q1(char data[])
 
     switch (mes)
     {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
 
-        case 10:
+    case 10:
 
-        case 12:
-            if (dia > 31)
-                return 0;
-        break;
-
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            if (dia > 30)
-                return 0;
-        break;
-
-        case 2:
-        {
-            if ((dia == 29) && (ano % 4 == 0))
-                datavalida = 1;
-            else if (dia > 28)
-                return 0;
-        }
-        break;
-
-        default:
+    case 12:
+        if (dia > 31)
             return 0;
-            break;
+        break;
+
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        if (dia > 30)
+            return 0;
+        break;
+
+    case 2:
+    {
+        if ((dia == 29) && (ano % 4 == 0))
+            datavalida = 1;
+        else if (dia > 28)
+            return 0;
+    }
+    break;
+
+    default:
+        return 0;
+        break;
     }
     printf("\n");
 
@@ -181,37 +183,41 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
     {
         for (int j = 0; strBusca[j] == strTexto[i] && strBusca[j] != '\0' && strTexto[i] != '\0'; j++)
         {
-            if ((strTexto[i+1] > 'z' || (strTexto[i+1] < 'a' && strTexto[i+1] > 'Z') || (strTexto[i+1] < 'A' && strTexto[i+1] > '9') || strTexto[i+1] < '0'))
-                {
-                    acentuacao++;
-                }
+            if ((strTexto[i + 1] > 'z' || (strTexto[i + 1] < 'a' && strTexto[i + 1] > 'Z') || (strTexto[i + 1] < 'A' && strTexto[i + 1] > '9') || strTexto[i + 1] < '0'))
+            {
+                acentuacao++;
+            }
             if (j == 0)
             {
                 if (acentuacao > 0)
                 {
                     posicoes[p] = (i - acentuacao);
-                }else posicoes[p] = (i + 1);
-            }else if (j == tamBusca - 1)
+                }
+                else
+                    posicoes[p] = (i + 1);
+            }
+            else if (j == tamBusca - 1)
             {
                 p++;
-                
+
                 if (acentuacao > 0)
                 {
                     posicoes[p] = (i - acentuacao);
-                }else posicoes[p] = (i + 1);
-                
+                }
+                else
+                    posicoes[p] = (i + 1);
+
                 p++;
                 qtdOcorrencias++;
             }
             i++;
         }
     }
-    
+
     // for (int i = 0; posicoes[i] != '\0'; i++)
     // {
     //     printf("posicoes[%d] = %d\n", i, posicoes[i]);
     // }
-    
 
     return qtdOcorrencias;
 }
@@ -224,7 +230,7 @@ int q5(int num)
         numCopy /= 10;
         i++;
     }
-    
+
     numCopy = 0;
     while (i > 0)
     {
@@ -234,7 +240,7 @@ int q5(int num)
             numCopy *= 10;
         i--;
     }
-    
+
     num = numCopy;
     printf("RESULTADO %d\n\n", num);
     return num;
