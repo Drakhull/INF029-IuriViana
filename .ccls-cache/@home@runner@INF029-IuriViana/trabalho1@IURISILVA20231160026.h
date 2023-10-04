@@ -149,7 +149,37 @@ int q1(char data[]) {
     return 0;
 }
 DiasMesesAnos q2(char datainicial[], char datafinal[]);
-int q3(char *texto, char c, int isCaseSensitive);
+/*
+ Q3 = encontrar caracter em texto
+ @objetivo
+    Pesquisar quantas vezes um determinado caracter ocorre em um texto
+ @entrada
+    uma string texto, um caracter c e um inteiro que informa se é uma pesquisa Case Sensitive ou não. Se isCaseSensitive = 1, a pesquisa deve considerar diferenças entre maiúsculos e minúsculos.
+        Se isCaseSensitive != 1, a pesquisa não deve  considerar diferenças entre maiúsculos e minúsculos.
+ @saida
+    Um número n >= 0.
+ */
+int q3(char *texto, char c, int isCaseSensitive)
+{
+    int qtdOcorrencias = 0;
+    if(!(isCaseSensitive))
+    {
+      for(int i = 0; texto[i] != '\0'; i++)
+      {
+        if(c == texto[i] || (c + 32) == texto[i] || (c - 32) == texto[i])
+          qtdOcorrencias++;
+      }
+    }
+    else 
+    {
+      for(int i = 0; texto[i] != '\0'; i++)
+      {
+        if(c == texto[i])
+          qtdOcorrencias++;
+      }
+    }
+    return qtdOcorrencias;
+}
 
 /*
  Q4 = encontrar palavra em texto
@@ -233,7 +263,6 @@ int q5(int num) {
   }
 
   num = numCopy;
-  printf("RESULTADO %d\n\n", num);
   return num;
 }
 int q6(int numerobase, int numerobusca);

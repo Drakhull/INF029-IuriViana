@@ -217,8 +217,8 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
-
+    int qtdOcorrencias = 0;
+    
     return qtdOcorrencias;
 }
 
