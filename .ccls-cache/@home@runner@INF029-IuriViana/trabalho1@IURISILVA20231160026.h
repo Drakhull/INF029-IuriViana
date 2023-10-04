@@ -103,7 +103,11 @@ int q1(char data[]) {
   sAno[i] = '\0';
   dataBckp += i + 1;
   ano = atoi(sAno);
-
+  if (i == 1) 
+  {
+    if (ano >= 0 && ano <= 23) ano += 2000;
+    else ano += 1900;
+  }
   switch (mes) {
   case 1:
   case 3:
