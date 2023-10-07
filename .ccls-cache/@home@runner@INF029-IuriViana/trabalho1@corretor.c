@@ -12,12 +12,10 @@ void testQ5();
 void testQ6();
 
 int main(){
-  
     printf("q1\n");
     testQ1(); // 10 testes
     printf("q2\n");
     testQ2(); // 35 testes
-    
     printf("q3\n");
     testQ3(); // 13 testes
     printf("q4\n");
@@ -26,8 +24,6 @@ int main(){
     testQ5(); // 10 testes
     printf("q6\n");
     testQ6(); // 10 testes 
-    
-    
 }
 
 void testQ1(){
@@ -163,7 +159,7 @@ void testQ2(){
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
-    
+
     strcpy(datainicial,"27/02/2015");
     strcpy(datafinal,"03/03/2016");
     dma = q2(datainicial, datafinal);
@@ -171,10 +167,12 @@ void testQ2(){
     printf("%d\n",dma.qtdDias == 5);
     printf("%d\n",dma.qtdMeses == 0);
     printf("%d\n",dma.qtdAnos == 1);
+
     //teste 10
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
+
     strcpy(datainicial,"28/01/2016");
     strcpy(datafinal,"29/02/2016");
     dma = q2(datainicial, datafinal);
@@ -182,8 +180,9 @@ void testQ2(){
     printf("%d\n",dma.qtdDias == 1);
     printf("%d\n",dma.qtdMeses == 1);
     printf("%d\n",dma.qtdAnos == 0);
+
 }
-*/
+
 void testQ3(){
     char str[250];
     strcpy(str,"Renato Lima Novais");
