@@ -12,18 +12,20 @@ void testQ5();
 void testQ6();
 
 int main(){
-    printf("q1\n");
+    //pridntf("q1\n");
     testQ1(); // 10 testes
-    printf("q2\n");
+    //pridntf("q2\n");
     testQ2(); // 35 testes
-    printf("q3\n");
+    //prindtf("q3\n");
     testQ3(); // 13 testes
-    printf("q4\n");
+    //prdintf("q4\n");
     testQ4(); // 22 testes
-    printf("q5\n");
+    //prdintf("q5\n");
     testQ5(); // 10 testes
-    printf("q6\n");
+    //prdintf("q6\n");
     testQ6(); // 10 testes 
+
+
 }
 
 void testQ1(){
@@ -202,7 +204,7 @@ void testQ3(){
     printf("%d\n",q3(str, 'E', 1) == 2);
     printf("%d\n",q3(str, 'S', 1) == 0);
 
-    
+
 }
 
 void testQ4(){
